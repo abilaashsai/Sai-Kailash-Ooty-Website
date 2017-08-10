@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!--[if lt IE 7 ]>
+<html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]>
+<html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]>
+<html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en"> <!--<![endif]-->
+<head>
+    <!-- Basic Page Needs
+  ================================================== -->
+    <meta charset="utf-8">
+    <title>Sai Kailas Ooty</title>
+    <meta name="description" content="Om Sri Sai Ram">
+    <meta name="author" content="Abilash Rajasekaran">
+
+    <!-- Mobile Specific Metas
+  ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+  ================================================== -->
+    <link rel="stylesheet" href="css/zerogrid.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/responsiveslides.css"/>
+
+    <!--[if lt IE 8]>
+    <div style=' clear: both; text-align:center; position: relative;'>
+        <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+            <img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0"
+                 height="42" width="820"
+                 alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today."/>
+        </a>
+    </div>
+    <![endif]-->
+    <!--[if lt IE 9]>
+    <script src="js/html5.js"></script>
+    <script src="js/css3-mediaqueries.js"></script>
+    <![endif]-->
+
+    <link href='./images/favicon.ico' rel='icon' type='image/x-icon'/>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/responsiveslides.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/config.js"></script>
+
+    <!-- Firebase code-->
+    <script src="https://www.gstatic.com/firebasejs/3.6.7/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.10/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.10/firebase-storage.js"></script>
+
+
+    <script>
+        $(function () {
+            $("#slider").responsiveSlides({
+                auto: true,
+                pager: true,
+                nav: true,
+                speed: 500,
+                maxwidth: 800,
+                namespace: "centered-btns"
+            });
+        });
+
+    </script>
+
+
+    <!-- Load jQuery from Google's CDN -->
+    <!-- Load jQuery UI CSS  -->
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
+
+    <!-- Load jQuery UI Main JS  -->
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+    <!-- Load SCRIPT.JS which will create datepicker for input field  -->
+    <script src="js/divineFootprintsEdit.js"></script>
+</head>
+<body>
+<div class="main" style="visibility:hidden">
+    <div id="heading"></div>
+    <script>
+        initFirebase();
+        initApp = function () {
+            firebase.auth().onAuthStateChanged(function (user) {
+                if (user && (user.uid === abilash || user.uid === satish || user.uid === nand || user.uid === abilashoutlook)) {
+                    document.getElementById("heading").innerHTML = "<b>Om Sri Sai Ram</b><br><b>Welcome " + user.displayName + "</b>";
+                    document.getElementsByClassName('main')[0].style.visibility = 'visible'
+
+                    // User is signed in.
+                } else {
+                    document.getElementById("heading").innerHTML = "Sorry you are not Admin";
+                    document.location = "https://saikailasooty.org/";
+                }
+            }, function (error) {
+                document.getElementById("heading").innerHTML = "Sorry you are not Admin";
+                document.location = "https://saikailasooty.org/";
+            });
+
+        };
+        initApp();
+        readData();
+    </script>
+    <b>Title:</b>
+    <br>
+    <t></t>
+    <textarea id="writeuptitle" rows="2" cols="100"></textarea>
+    <br>
+    <b>Author:</b>
+    <br>
+    <textarea id="writeupauthor" rows="1" cols="80"></textarea>
+    <br>
+    <br>
+    <b>Choose Paragraph:</b>
+    <select id="para" onchange="checkParagraph()">
+        <option></option>
+        <option value="para">New paragraph</option>
+    </select>
+    <br>
+    <div id="paratext" style="display: none;">
+        <b>Enter paragraph number:</b>
+        <textarea id="paranumber" rows="1" cols="10"></textarea>
+    </div>
+    <br>
+    <b>Paragraph Title:</b>
+    <br>
+    <textarea id="paraTitle" rows="2" cols="180"></textarea>
+    <br>
+    <br>
+    <b>Paragraph Detail:</b>
+    <br>
+    <textarea id="parawriteup" rows="50" cols="180"></textarea>
+    <br>
+    <button type="button" onclick="updateEdit();">Update Details</button>
+    <br>
+    <br>
+    <div class="uploadFile">
+        <tr>
+            <td valign="top">
+                <label><b>Select Image</b></label>
+            </td>
+            <td valign=”top”>
+                <input accept=".png,.jpg,.jpeg" type="file" id="uploadFile" name="icon">
+                name: <input type="text" id="uploadFileName" name="uploadFileName">
+                description: <input type="text" id="imagedescription" name="imagedescription">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="5" style="text-align:center">
+                <button type="submit" onclick="uploadImage()">Upload Image</button>
+            </td>
+        </tr>
+
+    </div>
+    <button type="button" onclick="signOutFunction();">Sign out</button>
+    <script>
+        // Initialize Fi
+        // rebase
+        signOutFunction = function () {
+
+            firebase.auth().signOut().then(function () {
+                console.log('Signed Out');
+                document.location = "https://saikailasooty.org/";
+            }, function (error) {
+                console.error('Sign Out Error', error);
+            });
+        };
+    </script>
+</div>
+</body>
+</html>

@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!--[if lt IE 7 ]>
+<html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]>
+<html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]>
+<html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en"> <!--<![endif]-->
+<head>
+    <!-- Basic Page Needs
+  ================================================== -->
+    <meta charset="utf-8">
+    <title>Sai Kailas Ooty</title>
+    <meta name="description" content="Om Sri Sai Ram">
+    <meta name="author" content="Abilash Rajasekaran">
+
+    <!-- Mobile Specific Metas
+  ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+  ================================================== -->
+    <link rel="stylesheet" href="css/zerogrid.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/responsiveslides.css"/>
+    <link rel="stylesheet" href="css/detail.css"/>
+
+    <!--[if lt IE 8]>
+    <div style=' clear: both; text-align:center; position: relative;'>
+        <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+            <img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0"
+                 height="42" width="820"
+                 alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today."/>
+        </a>
+    </div>
+    <![endif]-->
+    <!--[if lt IE 9]>
+    <script src="js/html5.js"></script>
+    <script src="js/css3-mediaqueries.js"></script>
+    <![endif]-->
+
+    <link href='./images/favicon.ico' rel='icon' type='image/x-icon'/>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/responsiveslides.js"></script>
+
+    <!-- Firebase code-->
+    <script src="https://www.gstatic.com/firebasejs/4.1.1/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.1.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.1.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.1.1/firebase-storage.js"></script>
+
+    <script>
+        function initMap() {
+            var uluru = {lat: 11.376954, lng: 76.749970};
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 7,
+                center: uluru
+            });
+            var marker = new google.maps.Marker({
+                position: uluru,
+                map: map
+            });
+        }
+    </script>
+
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBeeynwd8F46gZZ8D9hw6WzShDXwoheCMA&callback=initMap">
+    </script>
+
+    <script>
+        $(function () {
+            $("#slider").responsiveSlides({
+                auto: true,
+                pager: true,
+                nav: true,
+                speed: 500,
+                maxwidth: 800,
+                namespace: "centered-btns"
+            });
+        });
+    </script>
+
+</head>
+<body>
+
+<!--------------Header--------------->
+<header>
+    <div class="zerogrid">
+        <div class="row">
+            <div class="col05">
+                <div id="logo"><a href=""><img src="./images/logo.png"/></a></div>
+            </div>
+            <div>
+                <div id="logoHeading"><a href=""><img src="./images/heading.png"/></a></div>
+            </div>
+        </div>
+    </div>
+</header>
+<!---------------Navigation------------>
+<nav>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="spiritual.html">Spiritual Wing</a></li>
+        <li><a href="service.html">Service Wing</a></li>
+        <li><a href="education.html">Educational Wing</a></li>
+        <li><a href="other.html">Other</a></li>
+        <li><a href="divinefootprints.html">Divine Footprints</a></li>
+        <li><a href="location.html">Location</a></li>
+
+    </ul>
+</nav>
+
+<!--------------Content--------------->
+</div>
+<section id="content">
+    <div class="zerogrid">
+        <div class="row block">
+            <div class="sidebar">
+                <section>
+                    <div class="heading">Location</div>
+
+                </section>
+                <div class="content" id="map">
+                </div>
+
+            </div>
+        </div>
+</section>
+<!--------------Footer--------------->
+<footer>
+    <div class="zerogrid">
+        <div class="row">
+            <section class="col-1-3">
+                <div class="heading">About us</div>
+                <div class="content">
+                    The picturesque hill-station in the Nilgiris District of Tamil Nadu is the latest entrant in the
+                    list of Abodes of Kaliyuga Avatar Bhagawan Sri Sathya Sai Baba. The Prashanthi report is found <a
+                        href="http://www.theprasanthireporter.org/2012/05/sai-kailash-divine-abode-in-ooty-dedicated-to-bhagawan/">here</a>.
+                </div>
+            </section>
+            <section class="col-1-3">
+                <div class="heading">FOLLOW US ON</div>
+                <td><a href="https://itunes.apple.com/in/app/sai-kailas-ooty/id1252407949?mt=8"><img src="images/ios.png"/></a></td>
+                <td><a href="https://play.google.com/store/apps/details?id=com.saikailas.ooty.organization&hl=en"><img src="images/android.png"/></a></td>
+            </section>
+        </div>
+    </div>
+</footer>
+<div id="copyright">
+    <p> Copyright © 2017 - saikailasooty.org</p>
+    <p></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!--[if lt IE 7 ]>
+<html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]>
+<html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]>
+<html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en"> <!--<![endif]-->
+<head>
+    <!-- Basic Page Needs
+  ================================================== -->
+    <meta charset="utf-8">
+    <title>Sai Kailas Ooty</title>
+    <meta name="description" content="Om Sri Sai Ram">
+    <meta name="author" content="Abilash Rajasekaran">
+
+    <!-- Mobile Specific Metas
+  ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+  ================================================== -->
+    <link rel="stylesheet" href="css/zerogrid.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/responsiveslides.css"/>
+
+    <!--[if lt IE 8]>
+    <div style=' clear: both; text-align:center; position: relative;'>
+        <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+            <img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0"
+                 height="42" width="820"
+                 alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today."/>
+        </a>
+    </div>
+    <![endif]-->
+    <!--[if lt IE 9]>
+    <script src="js/html5.js"></script>
+    <script src="js/css3-mediaqueries.js"></script>
+    <![endif]-->
+
+    <link href='./images/favicon.ico' rel='icon' type='image/x-icon'/>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/responsiveslides.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/credential.js"></script>
+
+    <!-- Firebase code-->
+    <script src="https://www.gstatic.com/firebasejs/3.6.7/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.10/firebase-auth.js"></script>
+
+
+    <script>
+        $(function () {
+            $("#slider").responsiveSlides({
+                auto: true,
+                pager: true,
+                nav: true,
+                speed: 500,
+                maxwidth: 800,
+                namespace: "centered-btns"
+            });
+        });
+
+    </script>
+
+
+    <!-- Load jQuery from Google's CDN -->
+    <!-- Load jQuery UI CSS  -->
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
+
+    <!-- Load jQuery UI Main JS  -->
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+    <!-- Load SCRIPT.JS which will create datepicker for input field  -->
+    <script src="js/eventEdit.js"></script>
+</head>
+<body>
+<div class="main" style="visibility:hidden">
+    <div id="heading"></div>
+    <script>
+        initFirebase();
+        initApp = function () {
+            firebase.auth().onAuthStateChanged(function (user) {
+                if (user && (user.uid === abilash || user.uid === satish || user.uid === nand || user.uid === abilashoutlook)) {
+                    document.getElementById("heading").innerHTML = "<b>Om Sri Sai Ram</b><br><b>Welcome " + user.displayName + "</b>";
+                    document.getElementsByClassName('main')[0].style.visibility = 'visible'
+
+                    // User is signed in.
+                } else {
+                    document.getElementById("heading").innerHTML = "Sorry you are not Admin";
+                    document.location = "https://saikailasooty.org/";
+                }
+            }, function (error) {
+                document.getElementById("heading").innerHTML = "Sorry you are not Admin";
+                document.location = "https://saikailasooty.org/";
+            });
+
+        };
+        initApp();
+        readEventData();
+        readAnnouncementData();
+        readThoughtData();
+    </script>
+    Thought For The Day: <input type="text" name="thoughtTitle">
+    <input type="text" id="thought">
+    <button onclick="thoughtSubmit();">Submit</button>
+    <br>
+    Announcement: <input type="text" name="announcementTitle">
+    <input type="text" id="announcement">
+    <button onclick="announcementSubmit();">Submit</button>
+    <br>
+    Remove Announcement:<input type="text" name="announcementTitleDelete">
+    <button onclick="announcementDelete();">Delete</button>
+    <br>
+    Add Event: <input type="text" name="upcomingEvent">
+    <input type="date" id="upcomingDatePicker"/>
+    <select id="eventType">
+        <option></option>
+        <option value="spiritual">SPIRITUAL WING</option>
+        <option value="service">SERVICE WING</option>
+        <option value="education">EDUCATIONAL WING</option>
+        <option value="other">OTHERS</option>
+    </select>
+    <button onclick="upcomingEventSubmit();">Submit</button>
+    <br>
+    <p id="upcomingData"></p>
+    <br>
+    Delete Event:
+    <select id="deleteEvent">
+        <option></option>
+    </select>
+    <button onclick="eventDelete();">Submit</button>
+    <br>
+    <button><a href="eventDetailsEdit.html">Add Additional Details</a></button>
+    <br>
+    <button><a href="divineFootprintsEdit.html">Add Divine Footprints</a></button>
+    <br>
+    <br>
+    <div>
+        <p><b>Thought For The Day:</b></p>
+        <p id="thoughtData"></p>
+    </div>
+    <div>
+        <p><b>Announcement:</b></p>
+        <p id="announcementData"></p>
+    </div>
+    <div>
+        <p><b>Upcoming Events:</b></p>
+        <p id="upcomingUpdate"></p>
+    </div>
+    <div>
+        <p><b>Past Events:</b></p>
+        <p id="pastUpdate"></p>
+    </div>
+
+    <br>
+    <button type="button" onclick="signOutFunction();">Sign out</button>
+    <script>
+        signOutFunction = function () {
+
+            firebase.auth().signOut().then(function () {
+                console.log('Signed Out');
+                document.location = "https://saikailasooty.org/";
+            }, function (error) {
+                console.error('Sign Out Error', error);
+            });
+        };
+    </script>
+</div>
+</body>
+</html>
