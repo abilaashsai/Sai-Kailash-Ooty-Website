@@ -1,4 +1,3 @@
-/*  jQuery ready function. Specify a function to execute when the DOM is fully loaded.  */
 function readData() {
     firebase.database().ref('article/footprints').once('value').then(function (snapshot) {
             document.getElementById("writeuptitle").value = snapshot.val().title;
