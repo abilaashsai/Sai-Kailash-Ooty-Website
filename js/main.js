@@ -37,10 +37,10 @@ function readData() {
         document.getElementById("upcomingData").innerHTML = upcoming;
         document.getElementById("pastData").innerHTML = past;
     });
-
     firebase.database().ref('announcement').once('value').then(function (snapshot) {
         var announcement = "";
         snapshot.forEach(function (title) {
+            document.getElementById("announcementVisibility").style.display = "block"
             announcement = announcement + "<li><b>" + title.val().title + "</b> - " + title.val().data + "</li>";
         });
         document.getElementById("announcementData").innerHTML = announcement;
