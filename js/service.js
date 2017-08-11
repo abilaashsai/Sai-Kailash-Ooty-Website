@@ -22,6 +22,20 @@ function readData() {
                 });
             }
         });
+        function scrollToSpecificLocation() {
+            var url_string = window.location.href;
+            var url = new URL(url_string);
+            var scrollId = "#" + url.searchParams.get("date");
+            if (url.searchParams.get("date") != null) {
+                $(document).ready(function () {
+                    $('html, body').animate({
+                        scrollTop: $(scrollId).offset().top
+                    }, 'slow');
+                });
+            }
+        }
+
+        scrollToSpecificLocation();
     });
 }
 

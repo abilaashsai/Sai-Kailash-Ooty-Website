@@ -12,9 +12,9 @@ function readData() {
                         month.forEach(function (day) {
                             var link = day.val().type + ".html";
                             if ((month.key == (today.getMonth() + 1) && day.key >= today.getDate()) || month.key > (today.getMonth() + 1)) {
-                                upcoming = upcoming + "<li><b><a href=" + link + ">" + day.val().message + '</a></b> - ' + day.val().date + "</li>";
+                                upcoming = upcoming + "<li><b><a href=" + link + "?date=" + day.val().date.replace(/ /g, "_") + ">" + day.val().message + '</a></b> - ' + day.val().date + "</li>";
                             } else {
-                                past = "<li><b><a href=" + link + ">" + day.val().message + '</a></b> - ' + day.val().date + "</li>";
+                                past = "<li><b><a href=" + link + "?date=" + day.val().date.replace(/ /g, "_") + ">" + day.val().message + '</a></b> - ' + day.val().date + "</li>";
                                 pastData.push(past);
                             }
                         })
@@ -22,7 +22,7 @@ function readData() {
                     if (month.key < (today.getMonth() + 1)) {
                         month.forEach(function (day) {
                             var link = day.val().type + ".html";
-                            past = "<li><b><a href=" + link + ">" + day.val().message + '</a></b> - ' + day.val().date + "</li>";
+                            past = "<li><b><a href=" + link + "?date=" + day.val().date.replace(/ /g, "_") + ">" + day.val().message + '</a></b> - ' + day.val().date + "</li>";
                             pastData.push(past);
                         })
                     }
