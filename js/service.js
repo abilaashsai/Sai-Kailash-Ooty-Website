@@ -46,7 +46,7 @@ function addDetailsToUI(date, message, detail, imageArr) {
 
     for (var imageCount = 0; imageCount < imageArr.length; imageCount++) {
         var storage = firebase.storage();
-        storage.refFromURL("gs://sai-kailas.appspot.com/events/upcoming/" + imageArr[imageCount]).getDownloadURL().then(function (url) {
+        storage.refFromURL(referenceUrl + imageArr[imageCount]).getDownloadURL().then(function (url) {
             var element = document.createElement("img");
             element.setAttribute("src", url);
             document.getElementById(modifiedDate).appendChild(element);

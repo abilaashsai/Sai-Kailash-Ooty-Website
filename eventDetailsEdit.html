@@ -108,7 +108,7 @@
     </script>
 
     <b>Select Event:</b>
-    <select id="eventAdded">
+    <select id="eventAdded" onchange="checkInformation()">
         <option></option>
     </select>
     <br>
@@ -119,7 +119,6 @@
         <option value="spiritual">SPIRITUAL WING</option>
         <option value="service">SERVICE WING</option>
         <option value="education">EDUCATIONAL WING</option>
-        <option value="other">OTHERS</option>
     </select>
     <button type="button" onclick="updateType();">Update Type</button>
     <br>
@@ -147,10 +146,33 @@
 
     </div>
     <br>
+    <br>
+    <br>
+    <div class="deleteFile">
+        <tr>
+            <td valign="top">
+                <label><b>Select Image</b></label>
+            </td>
+            <td valign=”top”>
+                <select id="deleteEventImage" onchange="showImage()">
+                    <option></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="5" style="text-align:center">
+                <button type="submit" onclick="deleteImage()">Delete Image</button>
+            </td>
+        </tr>
+        <tr>
+            <div id="showImage" style="width: 500px; height: 500px;"></div>
+        </tr>
+
+    </div>
+    <br>
+    <br>
     <button type="button" onclick="signOutFunction();">Sign out</button>
     <script>
-        // Initialize Fi
-        // rebase
         signOutFunction = function () {
 
             firebase.auth().signOut().then(function () {
