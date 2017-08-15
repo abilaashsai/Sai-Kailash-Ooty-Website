@@ -131,7 +131,6 @@ function uploadImage() {
         document.getElementById("uploadFile").value = "";
         document.getElementById("uploadFileName").value = "";
     }
-    location.reload();
 }
 
 function showImage() {
@@ -150,7 +149,6 @@ function deleteImage() {
         // an error occurred!
     });
     firebase.database().ref('events/upcoming/' + getSelectedEvent() + "/image/" + getSelectedImage()).remove();
-    location.reload();
 }
 
 function removeOptions(selectbox) {
