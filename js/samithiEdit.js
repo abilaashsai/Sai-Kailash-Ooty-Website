@@ -73,9 +73,12 @@ function addDetailsIntoDropDown(title) {
 
 function uploadImage() {
     var userText = document.getElementById("uploadFileName").value;
+    var userDesc = document.getElementById("imagedescription").value;
 
     if (userText == "") {
         alert("Please name the image file");
+    } else if (userDesc == "") {
+        alert("Please enter image description");
     }
     else if (getSelectedSamithi() == "") {
         alert("Please select the samithi");
@@ -89,7 +92,8 @@ function uploadImage() {
         });
 
         firebase.database().ref('samithi/village/' + getSelectedSamithi() + "/image").child(userText).set({
-            samithi: getSelectedSamithi()
+            samithi: getSelectedSamithi(),
+            description: userDesc
         });
 
         document.getElementById("uploadFile").value = "";
