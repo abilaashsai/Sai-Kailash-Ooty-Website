@@ -31,11 +31,10 @@ function addTitleAndAuthorToUI(title, author) {
 
 function addContentIntoUI(idkey, title, detail, imageArr, imagedescription) {
     var modifiedTitle = idkey;
-    console.log(title);
     var initial = "<article> <div class=\"heading\"> <p class=\"info\"><h4><i>" + title + "</i></h4></p> </div> <div class=\"content\" id=\"" + modifiedTitle + "\"></div><div> <p align=\"justify\">" + detail + "</p></div> </article>";
     for (var imageCount = 0; imageCount < imageArr.length; imageCount++) {
         var storage = firebase.storage();
-        storage.refFromURL("gs://sai-kailas.appspot.com/article/footprints/" + imageArr[imageCount]).getDownloadURL().then(function (url) {
+        storage.refFromURL(referenceUrlFootprints + imageArr[imageCount]).getDownloadURL().then(function (url) {
             var figure = document.createElement("figure");
             var figcaption = document.createElement("figcaption");
             var description = document.createTextNode(imagedescription[imageCount-1]);

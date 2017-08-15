@@ -5,15 +5,28 @@ function readSamithiData() {
         })
     });
 };
+function clearAllDetails() {
+    document.getElementById("samithiwriteup").value = "";
+    document.getElementById('samithiTitle').value = "";
+    document.getElementById("samithiDatePicker").value = "";
+    document.getElementById("uploadFileName").value = "";
+    document.getElementById("imagedescription").value = "";
+}
 
 function checkSamithi() {
     var samithiAdded = document.getElementById("samithiAdded");
     var selectedSamithi = samithiAdded.options[samithiAdded.selectedIndex].value;
     if (selectedSamithi === "add_new") {
+        document.getElementById('samithiTitle').readOnly = false;
         document.getElementById('samithiNew').style.display = "block"
+        clearAllDetails();
     } else {
-        document.getElementById('samithiNew').style.display = "none";
+        document.getElementById('samithiTitle').readOnly = true;
+        document.getElementById('samithiNew').style.display = "block";
         firebase.database().ref('samithi/village/' + selectedSamithi).once('value').then(function (snapshot) {
+            document.getElementById("samithiTitle").value = snapshot.val().title;
+            var dateFormat = moment(snapshot.val().date, "YYYY-MM-DD").format('YYYY-MM-DD');
+            document.getElementById("samithiDatePicker").value = dateFormat;
             document.getElementById("samithiwriteup").value = snapshot.val().detail;
             snapshot.forEach(function (image) {
                 if (image.key == "image") {
@@ -37,6 +50,7 @@ function getSelectedSamithi() {
 function updateEdit() {
     var samithiTitle = document.getElementById("samithiTitle").value;
     var samithiDetail = document.getElementById("samithiwriteup").value;
+    var date = document.getElementById("samithiDatePicker").value;
     var selectedSamithi = getSelectedSamithi();
 
     if (selectedSamithi == "") {
@@ -45,21 +59,31 @@ function updateEdit() {
         alert("Please fill the Samithi Name");
     } else if (samithiwriteup == "") {
         alert("Please fill the details of Samithi");
+    } else if (date == "") {
+        alert("Please enter the date");
     } else {
+        var eventDate = new Date(date);
+        var storingDate = eventDate.getFullYear() + "-" + (eventDate.getMonth() + 1) + "-" + eventDate.getDate();
         if (selectedSamithi === "add_new" || selectedSamithi === "") {
             var modifiedTitle = samithiTitle.toLowerCase();
-            firebase.database().ref('samithi/village/' + modifiedTitle).set({
+            firebase.database().ref('samithi/village/' + samithiTitle).set({
                 title: samithiTitle,
-                detail: samithiDetail
+                detail: samithiDetail,
+                date: storingDate
             });
-            location.reload();
         } else {
-            firebase.database().ref('samithi/village/' + modifiedTitle).update({
+            firebase.database().ref('samithi/village/' + getSelectedSamithi()).update({
                 title: samithiTitle,
-                detail: samithiDetail
+                detail: samithiDetail,
+                date: storingDate
+
             });
-            location.reload();
         }
+        clearAllDetails();
+        removeSamithiOptions();
+        removeSamithiImages();
+        readSamithiData();
+
     }
 };
 
@@ -88,7 +112,7 @@ function uploadImage() {
         var file = $('#uploadFile').prop('files')[0];
 
         storageRef.put(file).then(function (snapshot) {
-            // console.log('Uploaded a blob or file!');
+            console.log('Uploaded a blob or file!');
         });
 
         firebase.database().ref('samithi/village/' + getSelectedSamithi() + "/image").child(userText).set({
@@ -99,7 +123,7 @@ function uploadImage() {
         document.getElementById("uploadFile").value = "";
         document.getElementById("uploadFileName").value = "";
     }
-    location.reload();
+    clearAllDetails();
 }
 
 function getSelectedImage() {
@@ -124,5 +148,27 @@ function deleteImage() {
         // an error occurred!
     });
     firebase.database().ref('samithi/village/' + getSelectedSamithi() + "/image/" + getSelectedImage()).remove();
-    location.reload();
+    clearAllDetails();
+}
+
+function removeSamithiOptions() {
+    var imageDiv = document.getElementById("samithiAdded");
+    while (imageDiv.firstChild) {
+        imageDiv.removeChild(imageDiv.firstChild);
+    }
+    var iterator;
+    for (iterator = imageDiv.options.length - 1; iterator >= 2; iterator--) {
+        imageDiv.remove(iterator);
+    }
+}
+
+function removeSamithiImages() {
+    var imageDiv = document.getElementById("deleteEventImage");
+    while (imageDiv.firstChild) {
+        imageDiv.removeChild(imageDiv.firstChild);
+    }
+    var iterator;
+    for (iterator = imageDiv.options.length - 1; iterator >= 1; iterator--) {
+        imageDiv.remove(iterator);
+    }
 }

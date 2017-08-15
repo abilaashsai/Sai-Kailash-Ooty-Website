@@ -55,6 +55,7 @@
     <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.10/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.10/firebase-storage.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 
 
     <script>
@@ -89,18 +90,18 @@
         initFirebase();
         initApp = function () {
             firebase.auth().onAuthStateChanged(function (user) {
-//                if (user && (user.uid === abilash || user.uid === satish || user.uid === nand || user.uid === abilashoutlook)) {
-//                    document.getElementById("heading").innerHTML = "<b>Om Sri Sai Ram</b><br><b>Welcome " + user.displayName + "</b>";
-                document.getElementsByClassName('main')[0].style.visibility = 'visible'
-//
-//                    // User is signed in.
-//                } else {
-//                    document.getElementById("heading").innerHTML = "Sorry you are not Admin";
-//                    document.location = "https://saikailasooty.org/";
-//                }
-//            }, function (error) {
-//                document.getElementById("heading").innerHTML = "Sorry you are not Admin";
-//                document.location = "https://saikailasooty.org/";
+                if (user && (user.uid === abilash || user.uid === satish || user.uid === nand || user.uid === abilashoutlook)) {
+                    document.getElementById("heading").innerHTML = "<b>Om Sri Sai Ram</b><br><b>Welcome " + user.displayName + "</b>";
+                    document.getElementsByClassName('main')[0].style.visibility = 'visible'
+
+                    // User is signed in.
+                } else {
+                    document.getElementById("heading").innerHTML = "Sorry you are not Admin";
+                    document.location = "https://saikailasooty.org/";
+                }
+            }, function (error) {
+                document.getElementById("heading").innerHTML = "Sorry you are not Admin";
+                document.location = "https://saikailasooty.org/";
             });
 
         };
@@ -118,6 +119,9 @@
     <div id="samithiNew" style="display: none;">
         <b>Enter Samithi Name:</b>
         <textarea id="samithiTitle" rows="1" cols="50"></textarea>
+        <br>
+        <b>Date Inaugurated:</b>
+        <input type="date" id="samithiDatePicker"/>
     </div>
     <br>
     <br>
