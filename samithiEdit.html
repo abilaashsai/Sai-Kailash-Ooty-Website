@@ -54,6 +54,7 @@
     <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.10/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.10/firebase-storage.js"></script>
 
 
     <script>
@@ -79,7 +80,7 @@
     <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
     <!-- Load SCRIPT.JS which will create datepicker for input field  -->
-    <script src="js/eventEdit.js"></script>
+    <script src="js/samithiEdit.js"></script>
 </head>
 <body>
 <div class="main" style="visibility:hidden">
@@ -88,92 +89,102 @@
         initFirebase();
         initApp = function () {
             firebase.auth().onAuthStateChanged(function (user) {
-                if (user && (user.uid === abilash || user.uid === satish || user.uid === nand || user.uid === abilashoutlook)) {
-                    document.getElementById("heading").innerHTML = "<b>Om Sri Sai Ram</b><br><b>Welcome " + user.displayName + "</b>";
-                    document.getElementsByClassName('main')[0].style.visibility = 'visible'
-
-                    // User is signed in.
-                } else {
-                    document.getElementById("heading").innerHTML = "Sorry you are not Admin";
-                    document.location = "https://saikailasooty.org/";
-                }
-            }, function (error) {
-                document.getElementById("heading").innerHTML = "Sorry you are not Admin";
-                document.location = "https://saikailasooty.org/";
+//                if (user && (user.uid === abilash || user.uid === satish || user.uid === nand || user.uid === abilashoutlook)) {
+//                    document.getElementById("heading").innerHTML = "<b>Om Sri Sai Ram</b><br><b>Welcome " + user.displayName + "</b>";
+                document.getElementsByClassName('main')[0].style.visibility = 'visible'
+//
+//                    // User is signed in.
+//                } else {
+//                    document.getElementById("heading").innerHTML = "Sorry you are not Admin";
+//                    document.location = "https://saikailasooty.org/";
+//                }
+//            }, function (error) {
+//                document.getElementById("heading").innerHTML = "Sorry you are not Admin";
+//                document.location = "https://saikailasooty.org/";
             });
 
         };
         initApp();
-        readEventData();
-        readAnnouncementData();
-        readThoughtData();
+        readSamithiData();
     </script>
-    Thought For The Day: <input type="text" name="thoughtTitle">
-    <input type="text" id="thought">
-    <button onclick="thoughtSubmit();">Submit</button>
-    <br>
-    Announcement: <input type="text" name="announcementTitle">
-    <input type="text" id="announcement">
-    <button onclick="announcementSubmit();">Submit</button>
-    <br>
-    Remove Announcement:<input type="text" name="announcementTitleDelete">
-    <button onclick="announcementDelete();">Delete</button>
-    <br>
-    Add Event: <input type="text" name="upcomingEvent">
-    <input type="date" id="upcomingDatePicker"/>
-    <select id="eventType">
-        <option></option>
-        <option value="spiritual">SPIRITUAL WING</option>
-        <option value="service">SERVICE WING</option>
-        <option value="education">EDUCATIONAL WING</option>
-    </select>
-    <button onclick="upcomingEventSubmit();">Submit</button>
-    <br>
-    <p id="upcomingData"></p>
-    <br>
-    Delete Event:
-    <select id="deleteEvent">
-        <option></option>
-    </select>
-    <button onclick="eventDelete();">Submit</button>
-    <br>
-    <button><a href="eventDetailsEdit.html">Add Additional Details</a></button>
-    <br>
-    <button><a href="divineFootprintsEdit.html">Add Divine Footprints</a></button>
-    <br>
-    <button><a href="samithiEdit.html">Add Samithi</a></button>
-    <br>
-    <br>
-    <div>
-        <p><b>Thought For The Day:</b></p>
-        <p id="thoughtData"></p>
-    </div>
-    <div>
-        <p><b>Announcement:</b></p>
-        <p id="announcementData"></p>
-    </div>
-    <div>
-        <p><b>Upcoming Events:</b></p>
-        <p id="upcomingUpdate"></p>
-    </div>
-    <div>
-        <p><b>Past Events:</b></p>
-        <p id="pastUpdate"></p>
-    </div>
 
+    <b>Select Samithi:</b>
+    <select id="samithiAdded" onchange="checkSamithi()">
+        <option></option>
+        <option value="add_new">Add new Samithi</option>
+    </select>
     <br>
-    <button type="button" onclick="signOutFunction();">Sign out</button>
-    <script>
-        signOutFunction = function () {
+    <br>
+    <div id="samithiNew" style="display: none;">
+        <b>Enter Samithi Name:</b>
+        <textarea id="samithiTitle" rows="1" cols="50"></textarea>
+    </div>
+    <br>
+    <br>
+    <b>Samithi Detail:</b>
+    <br>
+    <textarea id="samithiwriteup" rows="30" cols="120"></textarea>
+    <br>
+    <button type="button" onclick="updateEdit();">Update Details</button>
+</div>
+<br>
+<br>
+<br>
+<div class="uploadFile">
+    <tr>
+        <td valign="top">
+            <label><b>Select Image</b></label>
+        </td>
+        <td valign=”top”>
+            <input accept=".png,.jpg,.jpeg" type="file" id="uploadFile" name="icon">
+            <input type="text" id="uploadFileName" name="uploadFileName">
+        </td>
+    </tr>
+    <tr>
+        <td colspan="5" style="text-align:center">
+            <button type="submit" onclick="uploadImage()">Upload Image</button>
+        </td>
+    </tr>
 
-            firebase.auth().signOut().then(function () {
-                console.log('Signed Out');
-                document.location = "https://saikailasooty.org/";
-            }, function (error) {
-                console.error('Sign Out Error', error);
-            });
-        };
-    </script>
+</div>
+<br>
+<br>
+<br>
+<div class="deleteFile">
+    <tr>
+        <td valign="top">
+            <label><b>Select Image</b></label>
+        </td>
+        <td valign=”top”>
+            <select id="deleteEventImage" onchange="showImage()">
+                <option></option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="5" style="text-align:center">
+            <button type="submit" onclick="deleteImage()">Delete Image</button>
+        </td>
+    </tr>
+    <tr>
+        <div id="showImage" style="width: 500px; height: 500px;"></div>
+    </tr>
+
+</div>
+<br>
+<br>
+<button type="button" onclick="signOutFunction();">Sign out</button>
+<script>
+    signOutFunction = function () {
+
+        firebase.auth().signOut().then(function () {
+            console.log('Signed Out');
+            document.location = "https://saikailasooty.org/";
+        }, function (error) {
+            console.error('Sign Out Error', error);
+        });
+    };
+</script>
 </div>
 </body>
 </html>
