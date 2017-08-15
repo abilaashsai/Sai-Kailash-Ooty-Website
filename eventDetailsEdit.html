@@ -122,11 +122,30 @@
         <option value="education">EDUCATIONAL WING</option>
     </select>
     <button type="button" onclick="updateType();">Update Type</button>
+
     <br>
-    <textarea id="writeup" rows="40" cols="150"></textarea>
     <br>
-    <button type="button" onclick="updateDetails();">Update Detail</button>
+    <b>Choose Paragraph:</b>
+    <select id="para" onchange="checkParagraph()">
+        <option></option>
+        <option value="para">New paragraph</option>
+    </select>
     <br>
+    <div id="paratext" style="display: none;">
+        <b>Enter paragraph number:</b>
+        <textarea id="paranumber" rows="1" cols="10"></textarea>
+    </div>
+    <br>
+    <b>Paragraph Title:</b>
+    <br>
+    <textarea id="paraTitle" rows="2" cols="180"></textarea>
+    <br>
+    <br>
+    <b>Paragraph Detail:</b>
+    <br>
+    <textarea id="parawriteup" rows="50" cols="180"></textarea>
+    <br>
+    <button type="button" onclick="updateEdit();">Update Details</button>
     <br>
     <br>
     <div class="uploadFile">
@@ -136,7 +155,8 @@
             </td>
             <td valign=”top”>
                 <input accept=".png,.jpg,.jpeg" type="file" id="uploadFile" name="icon">
-                <input type="text" id="uploadFileName" name="uploadFileName">
+                name: <input type="text" id="uploadFileName" name="uploadFileName">
+                description: <input type="text" id="imagedescription" name="imagedescription">
             </td>
         </tr>
         <tr>
@@ -146,31 +166,6 @@
         </tr>
 
     </div>
-    <br>
-    <br>
-    <br>
-    <div class="deleteFile">
-        <tr>
-            <td valign="top">
-                <label><b>Select Image</b></label>
-            </td>
-            <td valign=”top”>
-                <select id="deleteEventImage" onchange="showImage()">
-                    <option></option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="5" style="text-align:center">
-                <button type="submit" onclick="deleteImage()">Delete Image</button>
-            </td>
-        </tr>
-        <tr>
-            <div id="showImage" style="width: 500px; height: 500px;"></div>
-        </tr>
-
-    </div>
-    <br>
     <br>
     <button type="button" onclick="signOutFunction();">Sign out</button>
     <script>
