@@ -39,14 +39,12 @@ function updateEdit() {
                     paradetail: userDetailText,
                     paratitle: userParaTitle
                 });
-                location.reload();
             }
         } else {
             firebase.database().ref('article/footprints/paragraph/' + selectedPara).update({
                 paradetail: userDetailText,
                 paratitle: userParaTitle
             });
-            location.reload();
         }
     }
 };
