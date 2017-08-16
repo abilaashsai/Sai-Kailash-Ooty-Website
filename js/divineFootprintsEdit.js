@@ -1,3 +1,4 @@
+var editor;
 function readData() {
     firebase.database().ref('article/footprints').once('value').then(function (snapshot) {
             document.getElementById("writeuptitle").value = snapshot.val().title;
@@ -12,12 +13,17 @@ function readData() {
         }
     );
 }
+function initializeQuill(){
+    var container = document.getElementById('parawriteup');
+    editor = new Quill(container, {
+        theme: 'snow'
+    });
+}
 
 function updateEdit() {
     var userDetailTitle = document.getElementById("writeuptitle").value;
     var userDetailAuthor = document.getElementById("writeupauthor").value;
-    var userDetailText = document.getElementById("parawriteup").value;
-    var userParaTitle = document.getElementById("paraTitle").value;
+    var userDetailText = editor.root.innerHTML;
     var para = document.getElementById("para");
     var selectedPara = para.options[para.selectedIndex].value;
 
@@ -27,8 +33,6 @@ function updateEdit() {
         alert("Please fill the author");
     } else if (userDetailText == "") {
         alert("Please fill the details of paragraph");
-    } else if (userParaTitle == "") {
-        alert("Please fill the paragraph title");
     } else {
         if (selectedPara === "para" || selectedPara === "") {
             var userParaNumber = document.getElementById("paranumber").value;
@@ -37,21 +41,18 @@ function updateEdit() {
             } else {
                 firebase.database().ref('article/footprints/paragraph/' + userParaNumber).set({
                     paradetail: userDetailText,
-                    paratitle: userParaTitle
                 });
             }
         } else {
             firebase.database().ref('article/footprints/paragraph/' + selectedPara).update({
                 paradetail: userDetailText,
-                paratitle: userParaTitle
             });
         }
     }
 };
 
 function checkParagraph() {
-    document.getElementById("paraTitle").value = "";
-    document.getElementById("parawriteup").value = "";
+    editor.root.innerHTML = "";
     var para = document.getElementById("para");
     var selectedPara = para.options[para.selectedIndex].value;
     if (selectedPara === "para" || selectedPara === "") {
@@ -59,8 +60,7 @@ function checkParagraph() {
     } else {
         document.getElementById('paratext').style.display = "none";
         firebase.database().ref('article/footprints/paragraph/' + selectedPara).once('value').then(function (snapshot) {
-            document.getElementById("paraTitle").value = snapshot.val().paratitle;
-            document.getElementById("parawriteup").value = snapshot.val().paradetail;
+            editor.root.innerHTML = snapshot.val().paradetail;
         });
 
     }

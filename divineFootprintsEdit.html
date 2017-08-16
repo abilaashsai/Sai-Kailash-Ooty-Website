@@ -26,6 +26,16 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="css/responsiveslides.css"/>
+    <link rel="stylesheet" href="css/divineFootprintsEdit.css"/>
+
+    <!-- Main Quill library -->
+    <script src="//cdn.quilljs.com/1.3.1/quill.js"></script>
+    <script src="//cdn.quilljs.com/1.3.1/quill.min.js"></script>
+
+    <!-- Theme included stylesheets -->
+    <link href="//cdn.quilljs.com/1.3.1/quill.snow.css" rel="stylesheet">
+    <link href="//cdn.quilljs.com/1.3.1/quill.bubble.css" rel="stylesheet">
+
 
     <!--[if lt IE 8]>
     <div style=' clear: both; text-align:center; position: relative;'>
@@ -128,14 +138,11 @@
         <textarea id="paranumber" rows="1" cols="10"></textarea>
     </div>
     <br>
-    <b>Paragraph Title:</b>
-    <br>
-    <textarea id="paraTitle" rows="2" cols="180"></textarea>
-    <br>
     <br>
     <b>Paragraph Detail:</b>
     <br>
-    <textarea id="parawriteup" rows="50" cols="180"></textarea>
+    <div id="parawriteup"></div>
+    <!--<textarea id="parawriteup" rows="50" cols="180"></textarea>-->
     <br>
     <button type="button" onclick="updateEdit();">Update Details</button>
     <br>
@@ -162,6 +169,7 @@
     <script>
         // Initialize Fi
         // rebase
+        initializeQuill();
         signOutFunction = function () {
 
             firebase.auth().signOut().then(function () {

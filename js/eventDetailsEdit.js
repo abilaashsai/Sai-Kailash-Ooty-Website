@@ -1,4 +1,5 @@
 /*  jQuery ready function. Specify a function to execute when the DOM is fully loaded.  */
+var editor;
 function readEventData() {
     firebase.database().ref('events/upcoming').once('value').then(function (snapshot) {
         var upcoming = "";
@@ -28,6 +29,13 @@ function readEventData() {
         });
     });
 };
+
+function initializeQuill() {
+    var container = document.getElementById('parawriteup');
+    editor = new Quill(container, {
+        theme: 'snow'
+    });
+}
 
 function getSelectedEvent() {
     var eventAddedId = document.getElementById("eventAdded");
@@ -134,8 +142,7 @@ function checkInformation() {
 // }
 
 function checkParagraph() {
-    document.getElementById("paraTitle").value = "";
-    document.getElementById("parawriteup").value = "";
+    editor.root.innerHTML = "";
     var para = document.getElementById("para");
     var selectedPara = para.options[para.selectedIndex].value;
     if (selectedPara === "para" || selectedPara === "") {
@@ -143,8 +150,7 @@ function checkParagraph() {
     } else {
         document.getElementById('paratext').style.display = "none";
         firebase.database().ref('events/upcoming/' + getSelectedEvent() + '/paragraph/' + selectedPara).once('value').then(function (snapshot) {
-            document.getElementById("paraTitle").value = snapshot.val().paratitle;
-            document.getElementById("parawriteup").value = snapshot.val().paradetail;
+            editor.root.innerHTML = snapshot.val().paradetail;
         });
 
     }
@@ -152,8 +158,7 @@ function checkParagraph() {
 
 function updateEdit() {
     var selectedEvent = getSelectedEvent();
-    var userDetailText = document.getElementById("parawriteup").value;
-    var userParaTitle = document.getElementById("paraTitle").value;
+    var userDetailText = editor.root.innerHTML;
     var para = document.getElementById("para");
     var selectedPara = para.options[para.selectedIndex].value;
 
@@ -161,8 +166,6 @@ function updateEdit() {
         alert("Please select the event");
     } else if (userDetailText == "") {
         alert("Please fill the details of paragraph");
-    } else if (userParaTitle == "") {
-        alert("Please fill the paragraph title");
     } else {
         if (selectedPara === "para" || selectedPara === "") {
             var userParaNumber = document.getElementById("paranumber").value;
@@ -171,13 +174,11 @@ function updateEdit() {
             } else {
                 firebase.database().ref('events/upcoming/' + getSelectedEvent() + '/paragraph/' + userParaNumber).set({
                     paradetail: userDetailText,
-                    paratitle: userParaTitle
                 });
             }
         } else {
             firebase.database().ref('events/upcoming/' + getSelectedEvent() + '/paragraph/' + selectedPara).update({
                 paradetail: userDetailText,
-                paratitle: userParaTitle
             });
         }
     }

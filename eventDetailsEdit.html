@@ -26,6 +26,16 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="css/responsiveslides.css"/>
+    <link rel="stylesheet" href="css/eventDetailsEdit.css"/>
+
+    <!-- Main Quill library -->
+    <script src="//cdn.quilljs.com/1.3.1/quill.js"></script>
+    <script src="//cdn.quilljs.com/1.3.1/quill.min.js"></script>
+
+    <!-- Theme included stylesheets -->
+    <link href="//cdn.quilljs.com/1.3.1/quill.snow.css" rel="stylesheet">
+    <link href="//cdn.quilljs.com/1.3.1/quill.bubble.css" rel="stylesheet">
+
 
     <!--[if lt IE 8]>
     <div style=' clear: both; text-align:center; position: relative;'>
@@ -90,7 +100,7 @@
         initApp = function () {
             firebase.auth().onAuthStateChanged(function (user) {
                 if (user && (user.uid === abilash || user.uid === satish || user.uid === nand || user.uid === abilashoutlook)) {
-                    document.getElementById("heading").innerHTML = "<b>Om Sri Sai Ram</b><br><b>Welcome " + user.displayName + "</b>";
+                    document.getEPlementById("heading").innerHTML = "<b>Om Sri Sai Ram</b><br><b>Welcome " + user.displayName + "</b>";
                     document.getElementsByClassName('main')[0].style.visibility = 'visible'
 
                     // User is signed in.
@@ -136,14 +146,11 @@
         <textarea id="paranumber" rows="1" cols="10"></textarea>
     </div>
     <br>
-    <b>Paragraph Title:</b>
-    <br>
-    <textarea id="paraTitle" rows="2" cols="180"></textarea>
-    <br>
     <br>
     <b>Paragraph Detail:</b>
     <br>
-    <textarea id="parawriteup" rows="50" cols="180"></textarea>
+    <div id="parawriteup"></div>
+    <!--<textarea id="parawriteup" rows="50" cols="180"></textarea>-->
     <br>
     <button type="button" onclick="updateEdit();">Update Details</button>
     <br>
@@ -169,6 +176,7 @@
     <br>
     <button type="button" onclick="signOutFunction();">Sign out</button>
     <script>
+        initializeQuill();
         signOutFunction = function () {
 
             firebase.auth().signOut().then(function () {

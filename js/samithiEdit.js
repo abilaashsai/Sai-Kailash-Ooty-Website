@@ -1,3 +1,4 @@
+var editor;
 function readSamithiData() {
     firebase.database().ref('samithi/village').once('value').then(function (snapshot) {
         snapshot.forEach(function (village) {
@@ -5,8 +6,16 @@ function readSamithiData() {
         })
     });
 };
+
+function initializeQuill() {
+    var container = document.getElementById('samithiwriteup');
+    editor = new Quill(container, {
+        theme: 'snow'
+    });
+}
+
 function clearAllDetails() {
-    document.getElementById("samithiwriteup").value = "";
+    editor.root.innerHTML = "";
     document.getElementById('samithiTitle').value = "";
     document.getElementById("samithiDatePicker").value = "";
     document.getElementById("uploadFileName").value = "";
@@ -27,7 +36,7 @@ function checkSamithi() {
             document.getElementById("samithiTitle").value = snapshot.val().title;
             var dateFormat = moment(snapshot.val().date, "YYYY-MM-DD").format('YYYY-MM-DD');
             document.getElementById("samithiDatePicker").value = dateFormat;
-            document.getElementById("samithiwriteup").value = snapshot.val().detail;
+            editor.root.innerHTML = snapshot.val().detail;
             snapshot.forEach(function (image) {
                 if (image.key == "image") {
                     image.forEach(function (imageName) {
@@ -49,7 +58,7 @@ function getSelectedSamithi() {
 }
 function updateEdit() {
     var samithiTitle = document.getElementById("samithiTitle").value;
-    var samithiDetail = document.getElementById("samithiwriteup").value;
+    var samithiDetail = editor.root.innerHTML;
     var date = document.getElementById("samithiDatePicker").value;
     var selectedSamithi = getSelectedSamithi();
 
@@ -57,7 +66,7 @@ function updateEdit() {
         alert("Please select the Samithi");
     } else if (samithiTitle == "") {
         alert("Please fill the Samithi Name");
-    } else if (samithiwriteup == "") {
+    } else if (editor.root.innerHTML == "") {
         alert("Please fill the details of Samithi");
     } else if (date == "") {
         alert("Please enter the date");
