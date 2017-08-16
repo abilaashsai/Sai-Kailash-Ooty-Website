@@ -12,12 +12,12 @@ function readData() {
                             image.forEach(function (names) {
                                 imageArr.push(para.key + "/" + line.key + "/" + image.key + "/" + names.key);
                                 names.forEach(function (desc) {
-                                description.push(names.val().description)
+                                    description.push(names.val().description)
                                 })
                             });
                         }
                     });
-                    addContentIntoUI(line.key, line.val().paratitle, line.val().paradetail, imageArr, description)
+                    addContentIntoUI(line.key, line.val().paradetail, imageArr, description)
                 });
             }
         });
@@ -29,15 +29,15 @@ function addTitleAndAuthorToUI(title, author) {
     document.getElementById("divineFootprintAuthor").innerHTML = ">>>" + author;
 }
 
-function addContentIntoUI(idkey, title, detail, imageArr, imagedescription) {
+function addContentIntoUI(idkey, detail, imageArr, imagedescription) {
     var modifiedTitle = idkey;
-    var initial = "<article> <div class=\"heading\"> <p class=\"info\"><h4><i>" + title + "</i></h4></p> </div> <div class=\"content\" id=\"" + modifiedTitle + "\"></div><div> <p align=\"justify\">" + detail + "</p></div> </article>";
+    var initial = "<article> </div> <div class=\"content\" id=\"" + modifiedTitle + "\"></div><div> <p align=\"justify\">" + detail + "</p></div> </article>";
     for (var imageCount = 0; imageCount < imageArr.length; imageCount++) {
         var storage = firebase.storage();
         storage.refFromURL(referenceUrlFootprints + imageArr[imageCount]).getDownloadURL().then(function (url) {
             var figure = document.createElement("figure");
             var figcaption = document.createElement("figcaption");
-            var description = document.createTextNode(imagedescription[imageCount-1]);
+            var description = document.createTextNode(imagedescription[imageCount - 1]);
             figcaption.appendChild(description);
             var image = document.createElement("img");
             image.setAttribute("src", url);

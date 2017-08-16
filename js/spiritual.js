@@ -23,7 +23,7 @@ function readData() {
                                                 });
                                             }
                                         });
-                                        addContentIntoUI(day.val().date, line.key, line.val().paratitle, line.val().paradetail, imageArr, description)
+                                        addContentIntoUI(day.val().date, line.key, line.val().paradetail, imageArr, description)
                                     });
                                 }
                             });
@@ -50,10 +50,10 @@ function readData() {
 
 }
 
-function addContentIntoUI(date, idkey, title, detail, imageArr, imagedescription) {
+function addContentIntoUI(date, idkey, detail, imageArr, imagedescription) {
     var modifiedDate = date.replace(/ /g, "_");
     var modifiedTitle = idkey;
-    var initial = "<article> <div class=\"heading\"> <p class=\"info\"><h4><i>" + title + "</i></h4></p> </div> <div class=\"content\" id=\"" + modifiedTitle + "\"></div><div> <p align=\"justify\">" + detail + "</p></div> </article>";
+    var initial = "<article> <div class=\"content\" id=\"" + modifiedTitle + "\"></div><div> <p align=\"justify\">" + detail + "</p></div> </article>";
     for (var imageCount = 0; imageCount < imageArr.length; imageCount++) {
         var storage = firebase.storage();
         storage.refFromURL(referenceUrl + imageArr[imageCount]).getDownloadURL().then(function (url) {
