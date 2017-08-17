@@ -13,7 +13,7 @@ function readData() {
         }
     );
 }
-function initializeQuill(){
+function initializeQuill() {
     var container = document.getElementById('parawriteup');
     editor = new Quill(container, {
         theme: 'snow'
@@ -40,15 +40,16 @@ function updateEdit() {
                 alert("Please enter paragraph number");
             } else {
                 firebase.database().ref('article/footprints/paragraph/' + userParaNumber).set({
-                    paradetail: userDetailText,
+                    paradetail: userDetailText
                 });
             }
         } else {
             firebase.database().ref('article/footprints/paragraph/' + selectedPara).update({
-                paradetail: userDetailText,
+                paradetail: userDetailText
             });
         }
     }
+    clearAllFields();
 };
 
 function checkParagraph() {
@@ -104,5 +105,23 @@ function uploadImage() {
         document.getElementById("uploadFile").value = "";
         document.getElementById("uploadFileName").value = "";
         document.getElementById("imagedescription").value = "";
+    }
+    clearAllFields();
+}
+
+function clearAllFields() {
+    editor.root.innerHTML = "";
+    document.getElementById("uploadFileName").value = "";
+    document.getElementById("imagedescription").value = "";
+    document.getElementById("paranumber").value = "";
+    removeOptions(document.getElementById("para"));
+    document.getElementById("para").value = "";
+    readData();
+}
+
+function removeOptions(selectbox) {
+    var iterator;
+    for (iterator = selectbox.options.length - 1; iterator >= 2; iterator--) {
+        selectbox.remove(iterator);
     }
 }

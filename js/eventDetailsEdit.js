@@ -78,6 +78,7 @@ function updateType() {
         });
         document.getElementById("eventType").value = "";
     }
+    clearAllFields();
 };
 
 function addDetailsIntoDropDown(year, month, date, message) {
@@ -130,17 +131,6 @@ function checkInformation() {
 //     firebase.database().ref('events/upcoming/' + getSelectedEvent() + "/image/" + getSelectedImage()).remove();
 // }
 
-// function removeOptions(selectbox) {
-//     var imageDiv = document.getElementById("showImage");
-//     while (imageDiv.firstChild) {
-//         imageDiv.removeChild(imageDiv.firstChild);
-//     }
-//     var iterator;
-//     for (iterator = selectbox.options.length - 1; iterator >= 1; iterator--) {
-//         selectbox.remove(iterator);
-//     }
-// }
-
 function checkParagraph() {
     editor.root.innerHTML = "";
     var para = document.getElementById("para");
@@ -173,15 +163,16 @@ function updateEdit() {
                 alert("Please enter paragraph number");
             } else {
                 firebase.database().ref('events/upcoming/' + getSelectedEvent() + '/paragraph/' + userParaNumber).set({
-                    paradetail: userDetailText,
+                    paradetail: userDetailText
                 });
             }
         } else {
             firebase.database().ref('events/upcoming/' + getSelectedEvent() + '/paragraph/' + selectedPara).update({
-                paradetail: userDetailText,
+                paradetail: userDetailText
             });
         }
     }
+    clearAllFields();
 };
 
 function uploadImage() {
@@ -215,8 +206,26 @@ function uploadImage() {
         document.getElementById("uploadFileName").value = "";
         document.getElementById("imagedescription").value = "";
     }
+    clearAllFields();
 }
 
+function clearAllFields() {
+    document.getElementById("eventAdded").value = "";
+    document.getElementById("eventType").value = "";
+    document.getElementById("paranumber").value = "";
+    document.getElementById("uploadFileName").value = "";
+    document.getElementById("imagedescription").value = "";
+    editor.root.innerHTML = "";
+    document.getElementById('paratext').style.display = "none";
+    removeOptions(document.getElementById("para"));
+}
+
+function removeOptions(selectbox) {
+    var iterator;
+    for (iterator = selectbox.options.length - 1; iterator >= 2; iterator--) {
+        selectbox.remove(iterator);
+    }
+}
 
 
 
