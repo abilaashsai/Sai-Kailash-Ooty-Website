@@ -218,6 +218,7 @@ function clearAllFields() {
     editor.root.innerHTML = "";
     document.getElementById('paratext').style.display = "none";
     removeOptions(document.getElementById("para"));
+    document.getElementById("para").value = "";
 }
 
 function removeOptions(selectbox) {
