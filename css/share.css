@@ -25,11 +25,23 @@ input[type=text], select {
     cursor: pointer;
 }
 
-.rednote{
+.rednote {
     color: red;
 }
 
 button:disabled {
     opacity: 0.25;
     cursor: not-allowed;
+}
+
+#imageNameWarning {
+    display: none;
+}
+
+#imageDetails {
+    display: none;
+}
+
+#failureNotice {
+    display: none;
 }

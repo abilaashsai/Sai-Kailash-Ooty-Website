@@ -117,21 +117,20 @@
     initFirebase();
     initApp = function () {
         firebase.auth().onAuthStateChanged(function (user) {
-            setEmail(user.uid);
-//            if (user && (user.uid === abilash || user.uid === satish || user.uid === nand || user.uid === abilashoutlook)) {
-            document.getElementById("heading").innerHTML = "<b>Om Sri Sai Ram</b><br><b>Welcome " + user.displayName + "</b>";
-            document.getElementsByClassName('main')[0].style.visibility = 'visible'
+            if (user) {
+                setUserID(user.uid);
+                setEmail(user.email);
+                document.getElementById("heading").innerHTML = "<b>Om Sri Sai Ram</b><br><b>Welcome " + user.displayName + "</b>";
+                document.getElementsByClassName('main')[0].style.visibility = 'visible'
 
-            // User is signed in.
-//            } else {
-//                document.getElementById("heading").innerHTML = "Sorry you are not Admin";
-//                document.location = "https://saikailasooty.org/";
-//            }
+            } else {
+                document.getElementById("heading").innerHTML = "Sorry you are not Admin";
+                document.location = "https://saikailasooty.org/";
+            }
         }, function (error) {
             document.getElementById("heading").innerHTML = "Sorry you are not Admin";
             document.location = "https://saikailasooty.org/";
         });
-
     };
     initApp();
 
@@ -162,8 +161,19 @@
                     <div class="heading loading">
                         <div id="writeup"></div>
                     </div>
+                    <br>
+                    <h2><a>Upload image if any (Optional):</a></h2>
+                    <input accept=".png,.jpg,.jpeg" type="file" id="uploadFile" name="icon">
+                    <br>
+                    <div id="imageDetails">
+                        <a>Name of Image:</a><i class="rednote" id="imageNameWarning"> *Please enter image name </i>
+                        <input type="text" id="uploadFileName" name="uploadFileName">
+                        <a>Description for Image:</a>
+                        <input type="text" id="imagedescription" name="imagedescription">
+                    </div>
                     <button class="button" onclick="submit()">Submit</button>
                     <i class="rednote"> *Fill in the above details to submit </i>
+                    <i class="rednote" id="failureNotice"><h2>Something went wrong please try again</h2></i>
                 </article>
             </div>
 
