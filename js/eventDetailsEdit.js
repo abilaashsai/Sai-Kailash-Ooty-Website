@@ -98,6 +98,7 @@ function addParaDetailsIntoDropDown(number) {
     paraDropDown.add(option);
 }
 function checkInformation() {
+    clearAllFieldsExceptEvent();
 
     if (getSelectedEvent() === "") {
         document.getElementById("eventType").value = "";
@@ -116,6 +117,7 @@ function checkInformation() {
 }
 
 function checkParagraph() {
+    removeEventImagesListAndImage();
     editor.root.innerHTML = "";
     var para = document.getElementById("para");
     var selectedPara = para.options[para.selectedIndex].value;
@@ -223,6 +225,16 @@ function clearAllFields() {
     removeOptions(document.getElementById("para"));
     document.getElementById("para").value = "";
 }
+function clearAllFields() {
+    document.getElementById("eventType").value = "";
+    document.getElementById("paranumber").value = "";
+    document.getElementById("uploadFileName").value = "";
+    document.getElementById("imagedescription").value = "";
+    editor.root.innerHTML = "";
+    document.getElementById('paratext').style.display = "none";
+    removeOptions(document.getElementById("para"));
+    document.getElementById("para").value = "";
+}
 
 function removeOptions(selectbox) {
     var iterator;
@@ -259,6 +271,27 @@ function deleteImage() {
     clearAllDetails();
 }
 
+function removeEventImagesListAndImage() {
+    var imageDiv = document.getElementById("deleteEventImage");
+    var iterator;
+    for (iterator = imageDiv.options.length - 1; iterator >= 1; iterator--) {
+        imageDiv.remove(iterator);
+    }
+    var imageDisp = document.getElementById("showImage")
+    while (imageDisp.hasChildNodes()) {
+        imageDisp.removeChild(imageDisp.lastChild);
+    }
+}
 
-
+function clearAllFieldsExceptEvent() {
+    removeEventImagesListAndImage();
+    document.getElementById("paranumber").value = "";
+    document.getElementById("uploadFileName").value = "";
+    document.getElementById("imagedescription").value = "";
+    editor.root.innerHTML = "";
+    document.getElementById('paratext').style.display = "none";
+    removeOptions(document.getElementById("para"));
+    removeOptions(document.getElementById("deleteEventImage"));
+    document.getElementById("para").value = "";
+}
 
