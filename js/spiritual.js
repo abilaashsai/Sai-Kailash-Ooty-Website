@@ -52,7 +52,7 @@ function readData() {
 
 function addContentIntoUI(date, idkey, detail, imageArr, imagedescription) {
     var modifiedDate = date.replace(/ /g, "_");
-    var modifiedTitle = modifiedDate+idkey;
+    var modifiedTitle = modifiedDate + idkey;
     var initial = "<article> <div class=\"content\" id=\"" + modifiedTitle + "\"></div><div> <p align=\"justify\">" + detail + "</p></div> </article>";
     for (var imageCount = 0; imageCount < imageArr.length; imageCount++) {
         var storage = firebase.storage();

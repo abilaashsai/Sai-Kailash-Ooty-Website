@@ -75,10 +75,12 @@ function updateType() {
     } else {
         firebase.database().ref('events/upcoming/' + getSelectedEvent()).update({
             type: userType
+        }).then(function () {
+            alert("type updated");
+            document.getElementById("eventType").value = "";
+            clearAllFields();
         });
-        document.getElementById("eventType").value = "";
     }
-    clearAllFields();
 };
 
 function addDetailsIntoDropDown(year, month, date, message) {
@@ -113,24 +115,6 @@ function checkInformation() {
     }
 }
 
-// function showImage() {
-//     var storage = firebase.storage();
-//     storage.refFromURL(referenceUrl + getSelectedEvent() + "/image/" + getSelectedImage()).getDownloadURL().then(function (url) {
-//         var element = document.createElement("img");
-//         element.setAttribute("src", url);
-//         document.getElementById("showImage").appendChild(element);
-//     });
-// }
-//
-// function deleteImage() {
-//     firebase.storage().refFromURL(referenceUrl + getSelectedEvent() + "/image/" + getSelectedImage()).delete().then(function () {
-//         // File deleted successfully
-//     }).catch(function (error) {
-//         // an error occurred!
-//     });
-//     firebase.database().ref('events/upcoming/' + getSelectedEvent() + "/image/" + getSelectedImage()).remove();
-// }
-
 function checkParagraph() {
     editor.root.innerHTML = "";
     var para = document.getElementById("para");
@@ -141,6 +125,18 @@ function checkParagraph() {
         document.getElementById('paratext').style.display = "none";
         firebase.database().ref('events/upcoming/' + getSelectedEvent() + '/paragraph/' + selectedPara).once('value').then(function (snapshot) {
             editor.root.innerHTML = snapshot.val().paradetail;
+            snapshot.forEach(function (image) {
+                if (image.key == "image") {
+                    image.forEach(function (imageName) {
+                            var imageTitle = document.getElementById("deleteEventImage");
+                            var option = document.createElement("option");
+                            option.value = imageName.key;
+                            option.text = imageName.key;
+                            imageTitle.add(option);
+                        }
+                    )
+                }
+            });
         });
 
     }
@@ -164,11 +160,15 @@ function updateEdit() {
             } else {
                 firebase.database().ref('events/upcoming/' + getSelectedEvent() + '/paragraph/' + userParaNumber).set({
                     paradetail: userDetailText
+                }).then(function () {
+                    alert("details updated");
                 });
             }
         } else {
             firebase.database().ref('events/upcoming/' + getSelectedEvent() + '/paragraph/' + selectedPara).update({
                 paradetail: userDetailText
+            }).then(function () {
+                alert("details");
             });
         }
     }
@@ -195,11 +195,14 @@ function uploadImage() {
         var file = $('#uploadFile').prop('files')[0];
 
         storageRef.put(file).then(function (snapshot) {
+            alert("image uploaded successfully");
             // console.log('Uploaded a blob or file!');
         });
 
         firebase.database().ref('events/upcoming/' + getSelectedEvent() + '/paragraph/' + selectedPara + "/image").child(userText).set({
             description: userDesc
+        }).then(function () {
+            alert("image description set successfull");
         });
 
         document.getElementById("uploadFile").value = "";
@@ -227,6 +230,35 @@ function removeOptions(selectbox) {
         selectbox.remove(iterator);
     }
 }
+
+function getSelectedPara() {
+    var para = document.getElementById("para").value;
+    return para;
+}
+
+function showImage() {
+    var storage = firebase.storage();
+    storage.refFromURL(referenceUrl + getSelectedEvent() + '/paragraph/' + getSelectedPara() + "/image/" + getSelectedImage()).getDownloadURL().then(function (url) {
+        var element = document.createElement("img");
+        element.setAttribute("src", url);
+        document.getElementById("showImage").appendChild(element);
+    });
+}
+
+function deleteImage() {
+    firebase.storage().refFromURL(referenceUrl + getSelectedEvent() + '/paragraph/' + getSelectedPara() + "/image/" + getSelectedImage()).delete().then(function () {
+        // File deleted successfully
+    }).then(function () {
+        alert("image deleted successfull");
+    }).catch(function (error) {
+        // an error occurred!
+    });
+    firebase.database().ref(referenceUrl + getSelectedEvent() + '/paragraph/' + getSelectedPara() + "/image/" + getSelectedImage()).remove().then(function () {
+        alert("image reference deleted successfull");
+    });
+    clearAllDetails();
+}
+
 
 
 
