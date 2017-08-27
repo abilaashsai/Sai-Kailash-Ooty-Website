@@ -161,8 +161,23 @@ function checkSucceed() {
         console.log("success")
     }
 }
+function readReview() {
+    var loadingReviewElement = document.getElementsByClassName('loadingReview')[0];
+    var mainContentReviewElement = document.getElementsByClassName('main-content-review')[0];
+    loadingReviewElement.style.display = 'inline';
+    firebase.database().ref('experience/user/' + userUID).once('value').then(function (snapshot) {
+        while (mainContentReviewElement.hasChildNodes()) {
+            mainContentReviewElement.removeChild(mainContentReviewElement.lastChild);
+        }
+        loadingReviewElement.style.display = 'none';
+        addDetailsToUI(snapshot.val().title)
+    })
+}
 
 function openTab(evt, tabName) {
+    if (tabName === 'Review') {
+        readReview()
+    }
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
@@ -174,4 +189,11 @@ function openTab(evt, tabName) {
     }
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
+}
+
+function addDetailsToUI(title) {
+    var initial = "<article> <div class=\"heading\"> <h2><a>" + title + "</a></h2>";
+    var final = "</div> </article>";
+    var element = initial + final;
+    $(".main-content-review").prepend(element);
 }
