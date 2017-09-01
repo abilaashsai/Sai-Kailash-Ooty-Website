@@ -41,19 +41,45 @@ function updateEdit() {
             } else {
                 firebase.database().ref('article/footprints/paragraph/' + userParaNumber).set({
                     paradetail: userDetailText
+                }).then(function () {
+                    alert("details updated successfully");
+                    clearAllDetails();
+                    readData();
+                }).catch(function (error) {
+                    // an error occurred!
+                    alert("some error has been occurred");
                 });
             }
         } else {
             firebase.database().ref('article/footprints/paragraph/' + selectedPara).update({
                 paradetail: userDetailText
+            }).then(function () {
+                alert("details updated successfully");
+                clearAllDetails();
+                readData();
+            }).catch(function (error) {
+                // an error occurred!
+                alert("some error has been occurred");
             });
         }
     }
-    clearAllFields();
 };
 
+function getSelectedPara() {
+    var para = document.getElementById("para");
+    var selectedPara = para.options[para.selectedIndex].value;
+    return selectedPara
+}
+
+function getSelectedImage() {
+    var eventAddedId = document.getElementById("deleteEventImage");
+    var userSelection = eventAddedId.options[eventAddedId.selectedIndex].value;
+    return userSelection
+}
+
 function checkParagraph() {
-    editor.root.innerHTML = "";
+    clearAllFieldsExceptPara();
+
     var para = document.getElementById("para");
     var selectedPara = para.options[para.selectedIndex].value;
     if (selectedPara === "para" || selectedPara === "") {
@@ -62,6 +88,18 @@ function checkParagraph() {
         document.getElementById('paratext').style.display = "none";
         firebase.database().ref('article/footprints/paragraph/' + selectedPara).once('value').then(function (snapshot) {
             editor.root.innerHTML = snapshot.val().paradetail;
+            snapshot.forEach(function (image) {
+                if (image.key == "image") {
+                    image.forEach(function (imageName) {
+                            var imageTitle = document.getElementById("deleteEventImage");
+                            var option = document.createElement("option");
+                            option.value = imageName.key;
+                            option.text = imageName.key;
+                            imageTitle.add(option);
+                        }
+                    )
+                }
+            });
         });
 
     }
@@ -94,29 +132,30 @@ function uploadImage() {
         var $ = jQuery;
         var file = $('#uploadFile').prop('files')[0];
 
-        storageRef.put(file).then(function (snapshot) {
-            // console.log('Uploaded a blob or file!');
+        storageRef.put(file).then(function () {
+            alert("image uploaded successfully");
+            clearAllDetails();
+            readData();
+        }).catch(function (error) {
+            // an error occurred!
+            alert("some error has been occurred");
         });
 
         firebase.database().ref('article/footprints/paragraph/' + selectedPara + "/image").child(userText).set({
             description: userDesc
+        }).then(function () {
+            alert("image uploaded successfully");
+            clearAllDetails();
+            readData();
+        }).catch(function (error) {
+            // an error occurred!
+            alert("some error has been occurred");
         });
 
         document.getElementById("uploadFile").value = "";
         document.getElementById("uploadFileName").value = "";
         document.getElementById("imagedescription").value = "";
     }
-    clearAllFields();
-}
-
-function clearAllFields() {
-    editor.root.innerHTML = "";
-    document.getElementById("uploadFileName").value = "";
-    document.getElementById("imagedescription").value = "";
-    document.getElementById("paranumber").value = "";
-    removeOptions(document.getElementById("para"));
-    document.getElementById("para").value = "";
-    readData();
 }
 
 function removeOptions(selectbox) {
@@ -125,3 +164,59 @@ function removeOptions(selectbox) {
         selectbox.remove(iterator);
     }
 }
+
+function showImage() {
+    var storage = firebase.storage();
+    storage.refFromURL(referenceUrlFootprints + 'paragraph/' + getSelectedPara() + "/image/" + getSelectedImage()).getDownloadURL().then(function (url) {
+        var element = document.createElement("img");
+        element.setAttribute("src", url);
+        document.getElementById("showImage").appendChild(element);
+    });
+}
+
+function deleteImage() {
+    firebase.storage().refFromURL(referenceUrlFootprints + 'paragraph/' + getSelectedPara() + "/image/" + getSelectedImage()).delete().then(function () {
+        // File deleted successfully
+    }).then(function () {
+        alert("image deleted successfull");
+    }).catch(function (error) {
+        // an error occurred!
+    });
+    firebase.database().ref('article/footprints/paragraph/' + getSelectedPara() + "/image/" + getSelectedImage()).remove().then(function () {
+        alert("image reference deleted successfull");
+        clearAllDetails();
+        readData();
+    });
+}
+
+function removeEventImagesListAndImage() {
+    var imageDiv = document.getElementById("deleteEventImage");
+    var iterator;
+    for (iterator = imageDiv.options.length - 1; iterator >= 1; iterator--) {
+        imageDiv.remove(iterator);
+    }
+    var imageDisp = document.getElementById("showImage")
+    while (imageDisp.hasChildNodes()) {
+        imageDisp.removeChild(imageDisp.lastChild);
+    }
+}
+
+function clearAllFieldsExceptPara() {
+    removeEventImagesListAndImage();
+    document.getElementById("uploadFileName").value = "";
+    document.getElementById("imagedescription").value = "";
+    editor.root.innerHTML = "";
+    document.getElementById('paratext').style.display = "none";
+    removeOptions(document.getElementById("deleteEventImage"));
+}
+
+function clearAllDetails() {
+    removeEventImagesListAndImage();
+    document.getElementById("uploadFileName").value = "";
+    document.getElementById("imagedescription").value = "";
+    document.getElementById("para").value = "";
+    editor.root.innerHTML = "";
+    document.getElementById('paratext').style.display = "none";
+    removeOptions(document.getElementById("deleteEventImage"));
+}
+

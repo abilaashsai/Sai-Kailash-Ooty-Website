@@ -215,17 +215,6 @@ function uploadImage() {
 }
 
 function clearAllFields() {
-    document.getElementById("eventAdded").value = "";
-    document.getElementById("eventType").value = "";
-    document.getElementById("paranumber").value = "";
-    document.getElementById("uploadFileName").value = "";
-    document.getElementById("imagedescription").value = "";
-    editor.root.innerHTML = "";
-    document.getElementById('paratext').style.display = "none";
-    removeOptions(document.getElementById("para"));
-    document.getElementById("para").value = "";
-}
-function clearAllFields() {
     document.getElementById("eventType").value = "";
     document.getElementById("paranumber").value = "";
     document.getElementById("uploadFileName").value = "";
