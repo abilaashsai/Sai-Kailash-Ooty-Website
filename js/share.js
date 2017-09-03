@@ -67,6 +67,13 @@ function enableSubmitButton() {
             imageDetails.style.display = 'inline';
             imageNameWarning.style.display = 'inline';
             imageUpload = false;
+
+            var file = $('#uploadFile').prop('files')[0];
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#userImage').attr('src', e.target.result);
+            };
+            reader.readAsDataURL(file);
             checkSubmitEnable();
 
             uploadFileName.oninput = function () {
