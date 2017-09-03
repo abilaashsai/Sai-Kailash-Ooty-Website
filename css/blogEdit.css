@@ -1,0 +1,22 @@
+#writeup {
+    min-height: 40em;
+    background-color: #ffffff;
+}
+
+#author {
+    min-height: 2em;
+    width: 60%;
+    font-size: medium;
+}
+
+#phone {
+    min-height: 2em;
+    width: 60%;
+    font-size: medium;
+}
+
+#maintitle {
+    min-height: 2em;
+    width: 60%;
+    font-size: medium;
+}

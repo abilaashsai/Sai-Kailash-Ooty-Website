@@ -26,6 +26,16 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="css/responsiveslides.css"/>
+    <link rel="stylesheet" href="css/blogEdit.css"/>
+
+    <!-- Main Quill library -->
+    <script src="//cdn.quilljs.com/1.3.1/quill.js"></script>
+    <script src="//cdn.quilljs.com/1.3.1/quill.min.js"></script>
+
+    <!-- Theme included stylesheets -->
+    <link href="//cdn.quilljs.com/1.3.1/quill.snow.css" rel="stylesheet">
+    <link href="//cdn.quilljs.com/1.3.1/quill.bubble.css" rel="stylesheet">
+
 
     <!--[if lt IE 8]>
     <div style=' clear: both; text-align:center; position: relative;'>
@@ -54,6 +64,8 @@
     <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.10/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.10/firebase-storage.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 
 
     <script>
@@ -79,7 +91,7 @@
     <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
     <!-- Load SCRIPT.JS which will create datepicker for input field  -->
-    <script src="js/eventEdit.js"></script>
+    <script src="js/blogEdit.js"></script>
 </head>
 <body>
 <div class="main" style="visibility:hidden">
@@ -87,95 +99,69 @@
     <script>
         initFirebase();
         initApp = function () {
-            firebase.auth().onAuthStateChanged(function (user) {
-                if (user && (user.uid === abilash || user.uid === satish || user.uid === nand || user.uid === abilashoutlook)) {
-                    document.getElementById("heading").innerHTML = "<b>Om Sri Sai Ram</b><br><b>Welcome " + user.displayName + "</b>";
-                    document.getElementsByClassName('main')[0].style.visibility = 'visible'
-
-                    // User is signed in.
-                } else {
-                    document.getElementById("heading").innerHTML = "Sorry you are not Admin";
-                    document.location = "https://saikailasooty.org/";
-                }
-            }, function (error) {
-                document.getElementById("heading").innerHTML = "Sorry you are not Admin";
-                document.location = "https://saikailasooty.org/";
-            });
+//            firebase.auth().onAuthStateChanged(function (user) {
+//                if (user && (user.uid === abilash || user.uid === satish || user.uid === nand || user.uid === abilashoutlook)) {
+//                    document.getElementById("heading").innerHTML = "<b>Om Sri Sai Ram</b><br><b>Welcome " + user.displayName + "</b>";
+            document.getElementsByClassName('main')[0].style.visibility = 'visible'
+//
+//                    // User is signed in.
+//                } else {
+//                    document.getElementById("heading").innerHTML = "Sorry you are not Admin";
+//                    document.location = "https://saikailasooty.org/";
+//                }
+//            }, function (error) {
+//                document.getElementById("heading").innerHTML = "Sorry you are not Admin";
+//                document.location = "https://saikailasooty.org/";
+//            });
 
         };
         initApp();
-        readEventData();
-        readAnnouncementData();
-        readThoughtData();
     </script>
-    Thought For The Day: <input type="text" name="thoughtTitle">
-    <input type="text" id="thought">
-    <button onclick="thoughtSubmit();">Submit</button>
-    <br>
-    Announcement: <input type="text" name="announcementTitle">
-    <input type="text" id="announcement">
-    <button onclick="announcementSubmit();">Submit</button>
-    <br>
-    Remove Announcement:<input type="text" name="announcementTitleDelete">
-    <button onclick="announcementDelete();">Delete</button>
-    <br>
-    Add Event: <input type="text" name="upcomingEvent">
-    <input type="date" id="upcomingDatePicker"/>
-    <select id="eventType">
-        <option></option>
-        <option value="spiritual">SPIRITUAL WING</option>
-        <option value="service">SERVICE WING</option>
-        <option value="education">EDUCATIONAL WING</option>
-    </select>
-    <button onclick="upcomingEventSubmit();">Submit</button>
-    <br>
-    <p id="upcomingData"></p>
-    <br>
-    Delete Event:
-    <select id="deleteEvent">
-        <option></option>
-    </select>
-    <button onclick="eventDelete();">Submit</button>
-    <br>
-    <button><a href="eventDetailsEdit.html">Add Additional Details</a></button>
-    <br>
-    <button><a href="divineFootprintsEdit.html">Add Divine Footprints</a></button>
-    <br>
-    <button><a href="samithiEdit.html">Add Samithi</a></button>
-    <br>
-    <button><a href="blogEdit.html">Blog Approve</a></button>
-    <br>
-    <br>
-    <div>
-        <p><b>Thought For The Day:</b></p>
-        <p id="thoughtData"></p>
-    </div>
-    <div>
-        <p><b>Announcement:</b></p>
-        <p id="announcementData"></p>
-    </div>
-    <div>
-        <p><b>Upcoming Events:</b></p>
-        <p id="upcomingUpdate"></p>
-    </div>
-    <div>
-        <p><b>Past Events:</b></p>
-        <p id="pastUpdate"></p>
-    </div>
 
-    <br>
-    <button type="button" onclick="signOutFunction();">Sign out</button>
-    <script>
-        signOutFunction = function () {
+    <article>
+        <h2><a>Select Blog:</a></h2>
+        <select id="blogAdded" onchange="checkBlog()">
+            <option></option>
+        </select>
+        <br>
+        <br>
 
-            firebase.auth().signOut().then(function () {
-                console.log('Signed Out');
-                document.location = "https://saikailasooty.org/";
-            }, function (error) {
-                console.error('Sign Out Error', error);
-            });
-        };
-    </script>
+        <h2><a>Main Title:</a></h2>
+        <input type="text" id="maintitle" name="maintitle">
+        <h2><a>Author:</a></h2>
+        <input type="text" id="author" name="author">
+        <h2><a>Phone Number (Optional):</a></h2>
+        <input type="text" id="phone" name="phone">
+        <h2><a>Content:</a></h2>
+        <div class="heading loading">
+            <div id="writeup"></div>
+        </div>
+        <div id="imageDetails">
+            <a>Name of Image:</a>
+            <input type="text" id="uploadFileName" name="uploadFileName">
+            <a>Description for Image:</a>
+            <input type="text" id="imagedescription" name="imagedescription">
+        </div>
+        <button class="button" onclick="approve()">Approve</button>
+    </article>
+</div>
+<br>
+<br>
+<br>
+<button type="button" onclick="signOutFunction();">Sign out</button>
+<script>
+    initialize();
+    readData();
+    signOutFunction = function () {
+
+        firebase.auth().signOut().then(function () {
+            console.log('Signed Out');
+            document.location = "https://saikailasooty.org/";
+        }, function (error) {
+            console.error('Sign Out Error', error);
+        });
+    };
+</script>
 </div>
 </body>
 </html>
