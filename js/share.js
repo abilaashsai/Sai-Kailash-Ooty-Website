@@ -174,6 +174,7 @@ function checkSucceed() {
         console.log("success")
     }
 }
+
 function readReview() {
     var loadingReviewElement = document.getElementsByClassName('loadingReview')[0];
     var mainContentReviewElement = document.getElementsByClassName('main-content-review')[0];
@@ -183,8 +184,24 @@ function readReview() {
             mainContentReviewElement.removeChild(mainContentReviewElement.lastChild);
         }
         loadingReviewElement.style.display = 'none';
-        if (snapshot.hasChild("approved") && snapshot.val().approved.status != "published") {
-            addDetailsToUI(snapshot.val().title)
+        if (!snapshot.hasChild("approved") ||
+            (snapshot.hasChild("approved") && snapshot.val().approved.status != "published")) {
+            addDetailsToUI(".main-content-review", snapshot.val().title)
+        }
+    })
+}
+
+function readPublished() {
+    var loadingReviewElement = document.getElementsByClassName('loadingPublished')[0];
+    var mainContentPublishedElement = document.getElementsByClassName('main-content-published')[0];
+    loadingReviewElement.style.display = 'inline';
+    firebase.database().ref('experience/user/' + userUID).once('value').then(function (snapshot) {
+        while (mainContentPublishedElement.hasChildNodes()) {
+            mainContentPublishedElement.removeChild(mainContentPublishedElement.lastChild);
+        }
+        loadingReviewElement.style.display = 'none';
+        if (snapshot.hasChild("approved") && snapshot.val().approved.status === "published") {
+            addDetailsToUI(".main-content-published", snapshot.val().title)
         }
     })
 }
@@ -192,6 +209,9 @@ function readReview() {
 function openTab(evt, tabName) {
     if (tabName === 'Review') {
         readReview()
+    }
+    if (tabName === 'Published') {
+        readPublished()
     }
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
@@ -206,11 +226,11 @@ function openTab(evt, tabName) {
     evt.currentTarget.className += " active";
 }
 
-function addDetailsToUI(title) {
+function addDetailsToUI(id, title) {
     var initial = "<article> <div class=\"heading\"> <h2><a>" + title + "</a></h2>";
     var final = "</div> </article>";
     var element = initial + final;
-    $(".main-content-review").prepend(element);
+    $(id).prepend(element);
 }
 
 function clearAllFields() {
