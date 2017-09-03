@@ -62,13 +62,17 @@ function enableSubmitButton() {
         var fileName = $(this).val();
         var imageDetails = document.getElementById("imageDetails");
         if (fileName.length > 0) {
+            var file = $('#uploadFile').prop('files')[0];
+            if (file.size / 1024 / 1024 > 4) {
+                alert("File too big");
+                return;
+            }
             var imageNameWarning = document.getElementById("imageNameWarning");
             var uploadFileName = document.getElementById("uploadFileName");
             imageDetails.style.display = 'inline';
             imageNameWarning.style.display = 'inline';
             imageUpload = false;
 
-            var file = $('#uploadFile').prop('files')[0];
             var reader = new FileReader();
             reader.onload = function (e) {
                 $('#userImage').attr('src', e.target.result);
