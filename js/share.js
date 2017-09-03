@@ -15,7 +15,7 @@ function initialize() {
     editor = new Quill(container, {
         theme: 'snow'
     });
-
+    document.getElementById('newBlogButton').click();
 }
 
 function setEmail(email) {
@@ -169,6 +169,8 @@ function submit() {
 
 function checkSucceed() {
     if (firebaseStorageSetSucceed && firebaseImageSetSucceed && firebaseDataSetSucceed) {
+        document.getElementById('reviewButton').click();
+        clearAllFields();
         console.log("success")
     }
 }
@@ -207,4 +209,15 @@ function addDetailsToUI(title) {
     var final = "</div> </article>";
     var element = initial + final;
     $(".main-content-review").prepend(element);
+}
+
+function clearAllFields() {
+    document.getElementById("maintitle").value = "";
+    document.getElementById("author").value = "";
+    document.getElementById("phone").value = "";
+    editor.root.innerHTML = "";
+    document.getElementById("uploadFile").value = "";
+    document.getElementById("imagedescription").value = "";
+    document.getElementById("uploadFileName").value = "";
+    imageDetails.style.display = 'none';
 }
