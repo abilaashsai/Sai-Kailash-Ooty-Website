@@ -183,7 +183,9 @@ function readReview() {
             mainContentReviewElement.removeChild(mainContentReviewElement.lastChild);
         }
         loadingReviewElement.style.display = 'none';
-        addDetailsToUI(snapshot.val().title)
+        if (snapshot.hasChild("approved") && snapshot.val().approved.status != "published") {
+            addDetailsToUI(snapshot.val().title)
+        }
     })
 }
 
