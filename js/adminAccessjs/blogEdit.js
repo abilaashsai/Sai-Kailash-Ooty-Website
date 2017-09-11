@@ -18,11 +18,24 @@ function readData() {
 }
 
 function checkBlog() {
+    clearImageField();
     firebase.database().ref("experience/user/" + getUserSelectionKey()).once('value').then(function (snapshot) {
         document.getElementById("maintitle").value = snapshot.val().title;
         document.getElementById("author").value = snapshot.val().author;
         document.getElementById("phone").value = snapshot.val().phone;
-        editor.root.innerHTML = snapshot.val().content
+        editor.root.innerHTML = snapshot.val().content;
+        snapshot.forEach(function (image) {
+            if (image.key == "image") {
+                image.forEach(function (source) {
+                    document.getElementById("imagedescription").value = source.val().description
+                    var storage = firebase.storage();
+                    storage.refFromURL("gs://sai-kailas.appspot.com/experience/user/" + getUserSelectionKey() + "/image/" + source.val().title)
+                        .getDownloadURL().then(function (url) {
+                        $('#userImage').attr('src', url);
+                    });
+                })
+            }
+        });
     })
 }
 
@@ -97,5 +110,9 @@ function reloadData() {
     document.getElementById('maintitle').value = "";
     document.getElementById('phone').value = "";
     editor.root.innerHTML = "";
+    clearImageField();
     readData();
+}
+function clearImageField() {
+    $('#userImage').attr('src', "#");
 }
