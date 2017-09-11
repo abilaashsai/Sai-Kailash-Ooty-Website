@@ -22,11 +22,11 @@
 
     <!-- CSS
   ================================================== -->
-    <link rel="stylesheet" href="css/zerogrid.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/responsive.css">
-    <link rel="stylesheet" href="css/responsiveslides.css"/>
-    <link rel="stylesheet" href="css/eventDetailsEdit.css"/>
+    <link rel="stylesheet" href="../css/zerogrid.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/responsiveslides.css"/>
+    <link rel="stylesheet" href="../css/divineFootprintsEdit.css"/>
 
     <!-- Main Quill library -->
     <script src="//cdn.quilljs.com/1.3.1/quill.js"></script>
@@ -47,17 +47,17 @@
     </div>
     <![endif]-->
     <!--[if lt IE 9]>
-    <script src="js/html5.js"></script>
-    <script src="js/css3-mediaqueries.js"></script>
+    <script src="../js/html5.js"></script>
+    <script src="../js/css3-mediaqueries.js"></script>
     <![endif]-->
 
-    <link href='./images/favicon.ico' rel='icon' type='image/x-icon'/>
+    <link href='../images/favicon.ico' rel='icon' type='image/x-icon'/>
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/responsiveslides.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/config.js"></script>
-    <script src="js/credential.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/responsiveslides.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/adminAccessjs/config.js"></script>
+    <script src="../js/adminAccessjs/credential.js"></script>
 
     <!-- Firebase code-->
     <script src="https://www.gstatic.com/firebasejs/3.6.7/firebase.js"></script>
@@ -90,7 +90,7 @@
     <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
     <!-- Load SCRIPT.JS which will create datepicker for input field  -->
-    <script src="js/eventDetailsEdit.js"></script>
+    <script src="../js/adminAccessjs/divineFootprintsEdit.js"></script>
 </head>
 <body>
 <div class="main" style="visibility:hidden">
@@ -115,24 +115,16 @@
 
         };
         initApp();
-        readEventData();
+        readData();
     </script>
-
-    <b>Select Event:</b>
-    <select id="eventAdded" onchange="checkInformation()">
-        <option></option>
-    </select>
+    <b>Title:</b>
     <br>
+    <t></t>
+    <textarea id="writeuptitle" rows="2" cols="100"></textarea>
     <br>
-    <b>Select Type:</b>
-    <select id="eventType">
-        <option></option>
-        <option value="spiritual">SPIRITUAL WING</option>
-        <option value="service">SERVICE WING</option>
-        <option value="education">EDUCATIONAL WING</option>
-    </select>
-    <button type="button" onclick="updateType();">Update Type</button>
-
+    <b>Author:</b>
+    <br>
+    <textarea id="writeupauthor" rows="1" cols="80"></textarea>
     <br>
     <br>
     <b>Choose Paragraph:</b>
@@ -197,9 +189,10 @@
         </tr>
 
     </div>
-    <br>
     <button type="button" onclick="signOutFunction();">Sign out</button>
     <script>
+        // Initialize Fi
+        // rebase
         initializeQuill();
         signOutFunction = function () {
 

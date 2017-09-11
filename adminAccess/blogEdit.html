@@ -22,11 +22,11 @@
 
     <!-- CSS
   ================================================== -->
-    <link rel="stylesheet" href="css/zerogrid.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/responsive.css">
-    <link rel="stylesheet" href="css/responsiveslides.css"/>
-    <link rel="stylesheet" href="css/blogEdit.css"/>
+    <link rel="stylesheet" href="../css/zerogrid.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/responsiveslides.css"/>
+    <link rel="stylesheet" href="../css/blogEdit.css"/>
 
     <!-- Main Quill library -->
     <script src="//cdn.quilljs.com/1.3.1/quill.js"></script>
@@ -47,17 +47,17 @@
     </div>
     <![endif]-->
     <!--[if lt IE 9]>
-    <script src="js/html5.js"></script>
-    <script src="js/css3-mediaqueries.js"></script>
+    <script src="../js/html5.js"></script>
+    <script src="../js/css3-mediaqueries.js"></script>
     <![endif]-->
 
-    <link href='./images/favicon.ico' rel='icon' type='image/x-icon'/>
+    <link href='../images/favicon.ico' rel='icon' type='image/x-icon'/>
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/responsiveslides.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/config.js"></script>
-    <script src="js/credential.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/responsiveslides.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/adminAccessjs/config.js"></script>
+    <script src="../js/adminAccessjs/credential.js"></script>
 
     <!-- Firebase code-->
     <script src="https://www.gstatic.com/firebasejs/3.6.7/firebase.js"></script>
@@ -91,7 +91,7 @@
     <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
     <!-- Load SCRIPT.JS which will create datepicker for input field  -->
-    <script src="js/blogEdit.js"></script>
+    <script src="../js/adminAccessjs/blogEdit.js"></script>
 </head>
 <body>
 <div class="main" style="visibility:hidden">
@@ -99,20 +99,20 @@
     <script>
         initFirebase();
         initApp = function () {
-//            firebase.auth().onAuthStateChanged(function (user) {
-//                if (user && (user.uid === abilash || user.uid === satish || user.uid === nand || user.uid === abilashoutlook)) {
-//                    document.getElementById("heading").innerHTML = "<b>Om Sri Sai Ram</b><br><b>Welcome " + user.displayName + "</b>";
-            document.getElementsByClassName('main')[0].style.visibility = 'visible'
-//
-//                    // User is signed in.
-//                } else {
-//                    document.getElementById("heading").innerHTML = "Sorry you are not Admin";
-//                    document.location = "https://saikailasooty.org/";
-//                }
-//            }, function (error) {
-//                document.getElementById("heading").innerHTML = "Sorry you are not Admin";
-//                document.location = "https://saikailasooty.org/";
-//            });
+            firebase.auth().onAuthStateChanged(function (user) {
+                if (user && (user.uid === abilash || user.uid === satish || user.uid === nand || user.uid === abilashoutlook)) {
+                    document.getElementById("heading").innerHTML = "<b>Om Sri Sai Ram</b><br><b>Welcome " + user.displayName + "</b>";
+                    document.getElementsByClassName('main')[0].style.visibility = 'visible'
+
+                    // User is signed in.
+                } else {
+                    document.getElementById("heading").innerHTML = "Sorry you are not Admin";
+                    document.location = "https://saikailasooty.org/";
+                }
+            }, function (error) {
+                document.getElementById("heading").innerHTML = "Sorry you are not Admin";
+                document.location = "https://saikailasooty.org/";
+            });
 
         };
         initApp();
