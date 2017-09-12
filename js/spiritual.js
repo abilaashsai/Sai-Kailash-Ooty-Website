@@ -53,7 +53,7 @@ function readData() {
 function addContentIntoUI(date, idkey, detail, imageArr, imagedescription) {
     var modifiedDate = date.replace(/ /g, "_");
     var modifiedTitle = modifiedDate + idkey;
-    var initial = "<article> <div class=\"content\" id=\"" + modifiedTitle + "\"></div><div> <p align=\"justify\">" + detail + "</p></div> </article>";
+    var element = "<article> <div class=\"content\" id=\"" + modifiedTitle + "\"></div><div> <p align=\"justify\">" + detail + "</p></div> </article>";
     for (var imageCount = 0; imageCount < imageArr.length; imageCount++) {
         var storage = firebase.storage();
         storage.refFromURL(referenceUrl + imageArr[imageCount]).getDownloadURL().then(function (url) {
@@ -69,15 +69,29 @@ function addContentIntoUI(date, idkey, detail, imageArr, imagedescription) {
         }).catch(function (error) {
         });
     }
-    var element = initial;
     $("#" + modifiedDate).append(element);
 }
 
 function addDetailsToUI(date, message) {
     var modifiedDate = date.replace(/ /g, "_");
-    var initial = "<article> <div class=\"heading\"> <h2><a>" + message + "</a></h2> <p class=\"info\">>>>" + date + "</p> </div> <div class=\"content\"> <div id=\"" + modifiedDate + "\"></div></div>";
-    var final = "</div> </article>";
-    var element = initial + final;
+    var headingId = modifiedDate + "heading";
+    var contentId = modifiedDate + "content";
+    var contentIdentifier = "#" + modifiedDate + "content";
+    var initial = `<article>
+                                <div class=\"panel panel-default\">
+                                    <div class=\"heading panel-heading\" data-toggle=\"collapse\" id = ${headingId} href=${contentIdentifier}>
+                                        <h2><a>${message}</a></h2>
+                                            <p class=\"info\">>>>${date}</p>
+                                    </div>
+                                    <div class=\"content panel-collapse collapse\" id = ${contentId} >
+                                        <div id=${modifiedDate}>
+                                        </div>
+                                    </div>
+                                </div>
+                     </article>
+                  `;
+    var element = initial;
+
     $(".main-content").prepend(element);
 }
  
