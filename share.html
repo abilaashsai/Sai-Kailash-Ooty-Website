@@ -117,11 +117,9 @@
                     document.getElementsByClassName('main')[0].style.visibility = 'visible'
 
                 } else {
-                    document.getElementById("content").innerHTML = "Please register to continue";
                     document.location = "https://saikailasooty.org/userLogin.html";
                 }
             }, function (error) {
-                document.getElementById("content").innerHTML = "Sorry you do not have access";
                 document.location = "https://saikailasooty.org/";
             });
         };
