@@ -243,3 +243,12 @@ function clearAllFields() {
     document.getElementById("uploadFileName").value = "";
     imageDetails.style.display = 'none';
 }
+
+function signOutFunction() {
+    firebase.auth().signOut().then(function () {
+        console.log('Signed Out');
+        document.location = "https://saikailasooty.org/";
+    }, function (error) {
+        console.error('Sign Out Error', error);
+    });
+};
