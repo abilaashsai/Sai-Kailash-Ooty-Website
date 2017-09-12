@@ -1,0 +1,18 @@
+.heading h2 {
+    text-align: center
+}
+
+.main-content .content figure {
+    float: none;
+    margin: 3px 30px 0px 0;
+    display: inline-block;
+}
+
+.main-content .content img {
+    float: right;
+    margin: 3px 30px 0px 0;
+    border: #BDBDBD 5px solid;
+}
+.main-content .content figure figcaption{
+    font-style: italic;
+}
