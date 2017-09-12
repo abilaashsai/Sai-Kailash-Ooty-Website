@@ -17,12 +17,17 @@
 }
 
 .row {
-     margin-right: 0px;
-     margin-left: 0px;
+    margin-right: 0px;
+    margin-left: 0px;
 }
 
 .main-content .content {
     padding-left: 0.5cm;
     padding-right: 0.5cm;
     text-align: justify;
+}
+
+sup {
+    vertical-align: super;
+    font-size: smaller;
 }
