@@ -105,31 +105,28 @@
 <div id="tabNavigation"></div>
 <script>populateTabs()</script>
 
-<script>
-    initFirebase();
-    initApp = function () {
-        firebase.auth().onAuthStateChanged(function (user) {
-            if (user) {
-                setUserID(user.uid);
-                setEmail(user.email);
-                document.getElementById("heading").innerHTML = "<b>Om Sri Sai Ram</b><br><b>Welcome " + user.displayName + "</b>";
-                document.getElementsByClassName('main')[0].style.visibility = 'visible'
-
-            } else {
-                document.getElementById("heading").innerHTML = "Please register to continue";
-                document.location = "https://saikailasooty.org/";
-            }
-        }, function (error) {
-            document.getElementById("heading").innerHTML = "Sorry you do not have access";
-            document.location = "https://saikailasooty.org/";
-        });
-    };
-    initApp();
-
-
-</script>
 <!--------------Content--------------->
 <section id="content">
+    <script>
+        initFirebase();
+        initApp = function () {
+            firebase.auth().onAuthStateChanged(function (user) {
+                if (user) {
+                    setUserID(user.uid);
+                    setEmail(user.email);
+                    document.getElementsByClassName('main')[0].style.visibility = 'visible'
+
+                } else {
+                    document.getElementById("content").innerHTML = "Please register to continue";
+                    document.location = "https://saikailasooty.org/userLogin.html";
+                }
+            }, function (error) {
+                document.getElementById("content").innerHTML = "Sorry you do not have access";
+                document.location = "https://saikailasooty.org/";
+            });
+        };
+        initApp();
+    </script>
     <div class="zerogrid">
         <div class="row block">
             <div class="sidebar">
