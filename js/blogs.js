@@ -62,8 +62,10 @@ function addDetailsToUI(date, url) {
         var description = "";
         snapshot.forEach(function (image) {
             if (image.key == "image") {
-                description = image.val().description;
-                imageUrl = url + "/image/" + image.val().title
+                image.forEach(function (name) {
+                    description = name.val().description;
+                    imageUrl = url + "/image/" + name.key;
+                });
             }
         });
         addContentIntoUI(date, snapshot.val().title, snapshot.val().content, imageUrl, description)
