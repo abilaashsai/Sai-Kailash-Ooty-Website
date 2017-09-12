@@ -78,7 +78,7 @@ function addDetailsToUI(date, message) {
     var headingId = modifiedDate + "heading";
     var contentId = modifiedDate + "content";
     var contentIdentifier = "#" + modifiedDate + "content";
-    var initial = `<article>
+    var element = `<article>
                                 <div class=\"panel panel-default\">
                                     <div class=\"heading panel-heading\" data-toggle=\"collapse\" id = ${headingId} href=${contentIdentifier}>
                                         <h2><a>${message}</a></h2>
@@ -91,7 +91,6 @@ function addDetailsToUI(date, message) {
                                 </div>
                      </article>
                   `;
-    var element = initial;
 
     $(".main-content").prepend(element);
 }
