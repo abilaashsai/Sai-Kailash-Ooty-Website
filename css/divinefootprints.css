@@ -13,3 +13,7 @@
     font-style: italic;
 }
 
+.main-content article {
+    text-align: justify;
+}
+
