@@ -29,7 +29,7 @@ function checkBlog() {
                 image.forEach(function (source) {
                     document.getElementById("imagedescription").value = source.val().description
                     var storage = firebase.storage();
-                    storage.refFromURL("gs://sai-kailas.appspot.com/experience/user/" + getUserSelectionKey() + "/image/" + source.val().title)
+                    storage.refFromURL(referenceUrlExperience + getUserSelectionKey() + "/image/" + source.val().title)
                         .getDownloadURL().then(function (url) {
                         $('#userImage').attr('src', url);
                     });
