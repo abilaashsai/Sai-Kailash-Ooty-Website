@@ -1,5 +1,5 @@
 function readData() {
-    firebase.database().ref('samithi/village').once('value').then(function (snapshot) {
+    firebase.database().ref(samithivillage).once('value').then(function (snapshot) {
         document.getElementsByClassName('loading')[0].remove();
         snapshot.forEach(function (samithi) {
             var imageArr = [];

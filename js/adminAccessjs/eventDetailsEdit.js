@@ -1,7 +1,7 @@
 /*  jQuery ready function. Specify a function to execute when the DOM is fully loaded.  */
 var editor;
 function readEventData() {
-    firebase.database().ref('events/upcoming').once('value').then(function (snapshot) {
+    firebase.database().ref(eventsupcoming).once('value').then(function (snapshot) {
         var upcoming = "";
         var past = "";
         var today = new Date();
@@ -56,7 +56,7 @@ function updateDetails() {
     } else if (userDetailText == "") {
         alert("Please fill the text");
     } else {
-        firebase.database().ref('events/upcoming/' + getSelectedEvent()).update({
+        firebase.database().ref(eventsupcoming + '/' + getSelectedEvent()).update({
             detail: document.getElementById("writeup").value
         });
         document.getElementById("writeup").value = "";
@@ -73,7 +73,7 @@ function updateType() {
     else if (userType == "") {
         alert("Please fill the text");
     } else {
-        firebase.database().ref('events/upcoming/' + getSelectedEvent()).update({
+        firebase.database().ref(eventsupcoming + '/' + getSelectedEvent()).update({
             type: userType
         }).then(function () {
             alert("type updated");
@@ -103,7 +103,7 @@ function checkInformation() {
     if (getSelectedEvent() === "") {
         document.getElementById("eventType").value = "";
     } else {
-        firebase.database().ref('events/upcoming/' + getSelectedEvent()).once('value').then(function (snapshot) {
+        firebase.database().ref(eventsupcoming + '/' + getSelectedEvent()).once('value').then(function (snapshot) {
             document.getElementById("eventType").value = snapshot.val().type;
             snapshot.forEach(function (para) {
                 if (para.key == "paragraph") {
@@ -160,14 +160,14 @@ function updateEdit() {
             if (userParaNumber == "") {
                 alert("Please enter paragraph number");
             } else {
-                firebase.database().ref('events/upcoming/' + getSelectedEvent() + '/paragraph/' + userParaNumber).set({
+                firebase.database().ref(eventsupcoming + '/' + getSelectedEvent() + '/paragraph/' + userParaNumber).set({
                     paradetail: userDetailText
                 }).then(function () {
                     alert("details updated");
                 });
             }
         } else {
-            firebase.database().ref('events/upcoming/' + getSelectedEvent() + '/paragraph/' + selectedPara).update({
+            firebase.database().ref(eventsupcoming + '/' + getSelectedEvent() + '/paragraph/' + selectedPara).update({
                 paradetail: userDetailText
             }).then(function () {
                 alert("details");
@@ -192,7 +192,7 @@ function uploadImage() {
     else if (selectedPara == "" || selectedPara == "para") {
         alert("Please select the paragraph");
     } else {
-        var storageRef = firebase.storage().ref('events/upcoming/' + getSelectedEvent() + '/paragraph/' + selectedPara + "/image/" + userText);
+        var storageRef = firebase.storage().ref(eventsupcoming + '/' + getSelectedEvent() + '/paragraph/' + selectedPara + "/image/" + userText);
         var $ = jQuery;
         var file = $('#uploadFile').prop('files')[0];
 
@@ -201,7 +201,7 @@ function uploadImage() {
             // console.log('Uploaded a blob or file!');
         });
 
-        firebase.database().ref('events/upcoming/' + getSelectedEvent() + '/paragraph/' + selectedPara + "/image").child(userText).set({
+        firebase.database().ref(eventsupcoming + '/' + getSelectedEvent() + '/paragraph/' + selectedPara + "/image").child(userText).set({
             description: userDesc
         }).then(function () {
             alert("image description set successfull");

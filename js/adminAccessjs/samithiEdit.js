@@ -1,6 +1,6 @@
 var editor;
 function readSamithiData() {
-    firebase.database().ref('samithi/village').once('value').then(function (snapshot) {
+    firebase.database().ref(samithivillage).once('value').then(function (snapshot) {
         snapshot.forEach(function (village) {
             addDetailsIntoDropDown(village.val().title);
         })
@@ -81,7 +81,7 @@ function updateEdit() {
                 date: storingDate
             });
         } else {
-            firebase.database().ref('samithi/village/' + getSelectedSamithi()).update({
+            firebase.database().ref(samithivillage + '/' + getSelectedSamithi()).update({
                 title: samithiTitle,
                 detail: samithiDetail,
                 date: storingDate
@@ -156,7 +156,7 @@ function deleteImage() {
     }).catch(function (error) {
         // an error occurred!
     });
-    firebase.database().ref('samithi/village/' + getSelectedSamithi() + "/image/" + getSelectedImage()).remove();
+    firebase.database().ref(samithivillage + '/' + getSelectedSamithi() + "/image/" + getSelectedImage()).remove();
     clearAllDetails();
 }
 

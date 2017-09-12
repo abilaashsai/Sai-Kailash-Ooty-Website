@@ -1,6 +1,6 @@
 var editor;
 function readData() {
-    firebase.database().ref('article/footprints').once('value').then(function (snapshot) {
+    firebase.database().ref(articlefootprints).once('value').then(function (snapshot) {
             document.getElementById("writeuptitle").value = snapshot.val().title;
             document.getElementById("writeupauthor").value = snapshot.val().author;
             snapshot.forEach(function (para) {
@@ -51,7 +51,7 @@ function updateEdit() {
                 });
             }
         } else {
-            firebase.database().ref('article/footprints/paragraph/' + selectedPara).update({
+            firebase.database().ref(articlefootprints + '/paragraph/' + selectedPara).update({
                 paradetail: userDetailText
             }).then(function () {
                 alert("details updated successfully");
@@ -86,7 +86,7 @@ function checkParagraph() {
         document.getElementById('paratext').style.display = "block"
     } else {
         document.getElementById('paratext').style.display = "none";
-        firebase.database().ref('article/footprints/paragraph/' + selectedPara).once('value').then(function (snapshot) {
+        firebase.database().ref(articlefootprints + '/paragraph/' + selectedPara).once('value').then(function (snapshot) {
             editor.root.innerHTML = snapshot.val().paradetail;
             snapshot.forEach(function (image) {
                 if (image.key == "image") {
@@ -128,7 +128,7 @@ function uploadImage() {
     else if (selectedPara == "" || selectedPara == "para") {
         alert("Please select the paragraph");
     } else {
-        var storageRef = firebase.storage().ref('article/footprints/paragraph/' + selectedPara + "/image/" + userText);
+        var storageRef = firebase.storage().ref(articlefootprints + '/paragraph/' + selectedPara + "/image/" + userText);
         var $ = jQuery;
         var file = $('#uploadFile').prop('files')[0];
 
@@ -141,7 +141,7 @@ function uploadImage() {
             alert("some error has been occurred");
         });
 
-        firebase.database().ref('article/footprints/paragraph/' + selectedPara + "/image").child(userText).set({
+        firebase.database().ref(articlefootprints + '/paragraph/' + selectedPara + "/image").child(userText).set({
             description: userDesc
         }).then(function () {
             alert("image uploaded successfully");
@@ -182,7 +182,7 @@ function deleteImage() {
     }).catch(function (error) {
         // an error occurred!
     });
-    firebase.database().ref('article/footprints/paragraph/' + getSelectedPara() + "/image/" + getSelectedImage()).remove().then(function () {
+    firebase.database().ref(articlefootprints + '/paragraph/' + getSelectedPara() + "/image/" + getSelectedImage()).remove().then(function () {
         alert("image reference deleted successfull");
         clearAllDetails();
         readData();

@@ -8,7 +8,7 @@ function initialize() {
 }
 
 function readData() {
-    firebase.database().ref("experience/user").once('value').then(function (snapshot) {
+    firebase.database().ref(experienceuser).once('value').then(function (snapshot) {
         snapshot.forEach(function (user) {
             if (!user.hasChild("approved")) {
                 addDetailsIntoDropDown(user.val().email, user.key)
@@ -19,7 +19,7 @@ function readData() {
 
 function checkBlog() {
     clearImageField();
-    firebase.database().ref("experience/user/" + getUserSelectionKey()).once('value').then(function (snapshot) {
+    firebase.database().ref(experienceuser + '/' + getUserSelectionKey()).once('value').then(function (snapshot) {
         document.getElementById("maintitle").value = snapshot.val().title;
         document.getElementById("author").value = snapshot.val().author;
         document.getElementById("phone").value = snapshot.val().phone;
@@ -72,7 +72,7 @@ function approve() {
         "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"][eventDate.getMonth()];
     var storingDate = eventDate.getDate() + ' ' + month + ' ' + eventDate.getFullYear();
 
-    firebase.database().ref('experience/approved/' + eventDate.getFullYear() + "/" +
+    firebase.database().ref(experienceapproved + '/' + eventDate.getFullYear() + "/" +
         (eventDate.getMonth() + 1) + "/" + eventDate.getDate() + "/" + getUserSelectionKey())
         .set({
             url: "experience/user/" + getUserSelectionKey(),
@@ -84,7 +84,7 @@ function approve() {
             showFailureNotice()
         });
 
-    firebase.database().ref("experience/user/" + getUserSelectionKey()).update({
+    firebase.database().ref(experienceuser + '/' + getUserSelectionKey()).update({
         title: getMainTitle(),
         author: getAuthorName(),
         phone: getPhoneNumber(),

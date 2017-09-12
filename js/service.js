@@ -1,5 +1,5 @@
 function readData() {
-    firebase.database().ref('events/upcoming').once('value').then(function (snapshot) {
+    firebase.database().ref(eventsupcoming).once('value').then(function (snapshot) {
         document.getElementsByClassName('loading')[0].remove();
         var today = new Date();
         snapshot.forEach(function (year) {

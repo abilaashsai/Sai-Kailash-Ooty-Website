@@ -28,7 +28,7 @@ function upcomingEventSubmit() {
             "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"][eventDate.getMonth()];
         var storingDate = eventDate.getDate() + ' ' + month + ' ' + eventDate.getFullYear();
 
-        firebase.database().ref('events/upcoming/' + eventDate.getFullYear() + "/" + (eventDate.getMonth() + 1) + "/" + eventDate.getDate()).set({
+        firebase.database().ref(eventsupcoming + '/' + eventDate.getFullYear() + "/" + (eventDate.getMonth() + 1) + "/" + eventDate.getDate()).set({
             message: input,
             date: storingDate,
             detail: "Details will be updated soon. Stay Tuned.",
@@ -41,7 +41,7 @@ function upcomingEventSubmit() {
 function announcementSubmit() {
     var title = document.getElementsByName("announcementTitle")[0].value;
     var data = document.getElementById("announcement").value;
-    firebase.database().ref('announcement/' + title).set({
+    firebase.database().ref(announcement + title).set({
         title: title,
         data: data
     });
@@ -50,7 +50,7 @@ function announcementSubmit() {
 
 function announcementDelete() {
     var title = document.getElementsByName("announcementTitleDelete")[0].value;
-    firebase.database().ref('announcement/' + title).remove();
+    firebase.database().ref(announcement + title).remove();
     readAnnouncementData();
 }
 
@@ -58,19 +58,14 @@ function eventDelete() {
     var eventDeleteId = document.getElementById("deleteEvent");
     var userSelection = eventDeleteId.options[eventDeleteId.selectedIndex].value;
 
-    firebase.database().ref('events/upcoming/' + userSelection).remove();
+    firebase.database().ref(eventsupcoming + '/' + userSelection).remove();
     document.getElementById("deleteEvent").value = "";
     readEventData();
 }
 
 function readEventData() {
 
-    var select = document.getElementById("deleteEvent");
-    // var length = select.options.length;
-    // for (i = 0; i < length; i++) {
-    //     select.options[i] = null;
-    // }
-    firebase.database().ref('events/upcoming').once('value').then(function (snapshot) {
+    firebase.database().ref(eventsupcoming).once('value').then(function (snapshot) {
         var upcoming = "";
         var past = "";
         var today = new Date();

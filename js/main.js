@@ -2,7 +2,7 @@ function readData() {
 
     var upcoming = "";
     var past = "";
-    firebase.database().ref('events/upcoming').once('value').then(function (snapshot) {
+    firebase.database().ref(eventsupcoming).once('value').then(function (snapshot) {
         var today = new Date();
         var pastData = [];
         snapshot.forEach(function (year) {

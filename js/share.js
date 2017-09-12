@@ -122,7 +122,7 @@ function submit() {
     var detail = editor.root.innerHTML;
     var imageDetails = document.getElementById("imageDetails");
 
-    firebase.database().ref("experience/user").child(userUID).set({
+    firebase.database().ref(experienceuser).child(userUID).set({
         title: maintitleValue,
         author: authorValue,
         phone: phoneValue,
@@ -139,7 +139,7 @@ function submit() {
     if (imageDetails.style.display != "none") {
         var uploadFileName = document.getElementById("uploadFileName").value;
         var imagedescription = document.getElementById("imagedescription").value;
-        firebase.database().ref("experience/user/" + userUID + "/image/" + uploadFileName).update({
+        firebase.database().ref(experienceuser + '/' + userUID + "/image/" + uploadFileName).update({
             title: uploadFileName,
             description: imagedescription
         }).then(function () {
@@ -150,7 +150,7 @@ function submit() {
                 showFailureNotice();
             });
 
-        var storageRef = firebase.storage().ref('experience/user/' + userUID + "/image/" + uploadFileName);
+        var storageRef = firebase.storage().ref(experienceuser + '/' + userUID + "/image/" + uploadFileName);
         var $ = jQuery;
         var file = $('#uploadFile').prop('files')[0];
 
@@ -179,7 +179,7 @@ function readReview() {
     var loadingReviewElement = document.getElementsByClassName('loadingReview')[0];
     var mainContentReviewElement = document.getElementsByClassName('main-content-review')[0];
     loadingReviewElement.style.display = 'inline';
-    firebase.database().ref('experience/user/' + userUID).once('value').then(function (snapshot) {
+    firebase.database().ref(experienceuser + '/' + userUID).once('value').then(function (snapshot) {
         while (mainContentReviewElement.hasChildNodes()) {
             mainContentReviewElement.removeChild(mainContentReviewElement.lastChild);
         }
@@ -195,7 +195,7 @@ function readPublished() {
     var loadingReviewElement = document.getElementsByClassName('loadingPublished')[0];
     var mainContentPublishedElement = document.getElementsByClassName('main-content-published')[0];
     loadingReviewElement.style.display = 'inline';
-    firebase.database().ref('experience/user/' + userUID).once('value').then(function (snapshot) {
+    firebase.database().ref(experienceuser + '/' + userUID).once('value').then(function (snapshot) {
         while (mainContentPublishedElement.hasChildNodes()) {
             mainContentPublishedElement.removeChild(mainContentPublishedElement.lastChild);
         }

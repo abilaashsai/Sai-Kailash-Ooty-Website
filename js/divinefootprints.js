@@ -1,5 +1,5 @@
 function readData() {
-    firebase.database().ref('article/footprints').once('value').then(function (snapshot) {
+    firebase.database().ref(articlefootprints).once('value').then(function (snapshot) {
         document.getElementsByClassName('loading')[0].remove();
         addTitleAndAuthorToUI(snapshot.val().title, snapshot.val().author)
         snapshot.forEach(function (para) {

@@ -1,5 +1,5 @@
 function readData() {
-    firebase.database().ref('experience/approved').once('value').then(function (snapshot) {
+    firebase.database().ref(experienceapproved).once('value').then(function (snapshot) {
         document.getElementsByClassName('loading')[0].remove();
         var today = new Date();
         snapshot.forEach(function (year) {
@@ -37,7 +37,7 @@ function addContentIntoUI(date, title, content, imageUrl, imagedescription) {
 }
 
 function addDetailsToUI(date, url) {
-    firebase.database().ref("experience/user/" + url).once('value').then(function (snapshot) {
+    firebase.database().ref(experienceuser + '/' + url).once('value').then(function (snapshot) {
         var modifiedDate = date.replace(/ /g, "_");
         var headingId = modifiedDate + "heading";
         var contentId = modifiedDate + "content";
