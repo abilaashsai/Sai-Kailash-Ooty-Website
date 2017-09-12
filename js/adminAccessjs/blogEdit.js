@@ -75,7 +75,7 @@ function approve() {
     firebase.database().ref(experienceapproved + '/' + eventDate.getFullYear() + "/" +
         (eventDate.getMonth() + 1) + "/" + eventDate.getDate() + "/" + getUserSelectionKey())
         .set({
-            url: "experience/user/" + getUserSelectionKey(),
+            url: getUserSelectionKey(),
             date: storingDate
         }).then(function () {
         alert("Successfully updated details")
