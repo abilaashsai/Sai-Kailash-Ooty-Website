@@ -26,6 +26,16 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/responsive.css">
     <link rel="stylesheet" href="../css/responsiveslides.css"/>
+    <link rel="stylesheet" href="../css/blogEdit.css"/>
+
+    <!-- Main Quill library -->
+    <script src="//cdn.quilljs.com/1.3.1/quill.js"></script>
+    <script src="//cdn.quilljs.com/1.3.1/quill.min.js"></script>
+
+    <!-- Theme included stylesheets -->
+    <link href="//cdn.quilljs.com/1.3.1/quill.snow.css" rel="stylesheet">
+    <link href="//cdn.quilljs.com/1.3.1/quill.bubble.css" rel="stylesheet">
+
 
     <!--[if lt IE 8]>
     <div style=' clear: both; text-align:center; position: relative;'>
@@ -53,6 +63,8 @@
     <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.10/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.10/firebase-storage.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 
 
     <script>
@@ -78,7 +90,7 @@
     <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
     <!-- Load SCRIPT.JS which will create datepicker for input field  -->
-    <script src="../js/adminAccessjs/eventEdit.js"></script>
+    <script src="../js/adminAccessjs/q&a.js"></script>
 </head>
 <body>
 <div class="main" style="visibility:hidden">
@@ -98,83 +110,36 @@
                 document.getElementById("heading").innerHTML = "Sorry you are not Admin";
                 document.location = "https://saikailasooty.org/";
             });
-
         };
         initApp();
-        readEventData();
-        readAnnouncementData();
-        readThoughtData();
     </script>
-    Thought For The Day: <input type="text" name="thoughtTitle">
-    <input type="text" id="thought">
-    <button onclick="thoughtSubmit();">Submit</button>
-    <br>
-    Announcement: <input type="text" name="announcementTitle">
-    <input type="text" id="announcement">
-    <button onclick="announcementSubmit();">Submit</button>
-    <br>
-    Remove Announcement:<input type="text" name="announcementTitleDelete">
-    <button onclick="announcementDelete();">Delete</button>
-    <br>
-    Add Event: <input type="text" name="upcomingEvent">
-    <input type="date" id="upcomingDatePicker"/>
-    <select id="eventType">
-        <option></option>
-        <option value="spiritual">SPIRITUAL WING</option>
-        <option value="service">SERVICE WING</option>
-        <option value="education">EDUCATIONAL WING</option>
-    </select>
-    <button onclick="upcomingEventSubmit();">Submit</button>
-    <br>
-    <p id="upcomingData"></p>
-    <br>
-    Delete Event:
-    <select id="deleteEvent">
-        <option></option>
-    </select>
-    <button onclick="eventDelete();">Submit</button>
-    <br>
-    <button><a href="eventDetailsEdit.html">Add Additional Details</a></button>
-    <br>
-    <button><a href="divineFootprintsEdit.html">Add Divine Footprints</a></button>
-    <br>
-    <button><a href="samithiEdit.html">Add Samithi</a></button>
-    <br>
-    <button><a href="blogEdit.html">Blog Approve</a></button>
-    <br>
-    <button><a href="q&a.html">Add Q&A</a></button>
-    <br>
-    <br>
-    <div>
-        <p><b>Thought For The Day:</b></p>
-        <p id="thoughtData"></p>
-    </div>
-    <div>
-        <p><b>Announcement:</b></p>
-        <p id="announcementData"></p>
-    </div>
-    <div>
-        <p><b>Upcoming Events:</b></p>
-        <p id="upcomingUpdate"></p>
-    </div>
-    <div>
-        <p><b>Past Events:</b></p>
-        <p id="pastUpdate"></p>
-    </div>
 
-    <br>
-    <button type="button" onclick="signOutFunction();">Sign out</button>
-    <script>
-        signOutFunction = function () {
+    <article>
+        <h2><a>Question:</a></h2>
+        <textarea id="writeuptitle" rows="2" cols="100"></textarea>
+        <h2><a>Answer:</a></h2>
+        <div class="heading loading">
+            <div id="writeup"></div>
+        </div>
+        <button class="button" onclick="submit()">Submit</button>
+    </article>
+</div>
+<br>
+<br>
+<br>
+<button type="button" onclick="signOutFunction();">Sign out</button>
+<script>
+    initialize();
+    signOutFunction = function () {
 
-            firebase.auth().signOut().then(function () {
-                console.log('Signed Out');
-                document.location = "https://saikailasooty.org/";
-            }, function (error) {
-                console.error('Sign Out Error', error);
-            });
-        };
-    </script>
+        firebase.auth().signOut().then(function () {
+            console.log('Signed Out');
+            document.location = "https://saikailasooty.org/";
+        }, function (error) {
+            console.error('Sign Out Error', error);
+        });
+    };
+</script>
 </div>
 </body>
 </html>
