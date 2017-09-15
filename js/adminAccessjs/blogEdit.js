@@ -66,7 +66,8 @@ function getPhoneNumber() {
 }
 
 function approve() {
-
+    var approveBol = false;
+    var statusBol = false;
     var eventDate = new Date();
     var month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
         "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"][eventDate.getMonth()];
@@ -78,10 +79,12 @@ function approve() {
             url: getUserSelectionKey(),
             date: storingDate
         }).then(function () {
-        alert("Successfully updated details")
+        alert("Successfully updated details");
+        approveBol = true;
+        reloadIfSuccess()
     })
         .catch(function (error) {
-            showFailureNotice()
+            alert("Something went wrong")
         });
 
     firebase.database().ref(experienceuser + '/' + getUserSelectionKey()).update({
@@ -91,13 +94,19 @@ function approve() {
         content: editor.root.innerHTML,
         approved: {status: "published"}
     }).then(function () {
-        alert("Successfully approved")
+        alert("Successfully approved");
+        statusBol = true;
+        reloadIfSuccess()
     })
         .catch(function (error) {
-            showFailureNotice()
+            alert("Something went wrong")
         });
 
-    reloadData();
+    function reloadIfSuccess() {
+        if (approveBol && statusBol) {
+            reloadData();
+        }
+    }
 }
 
 function reloadData() {
