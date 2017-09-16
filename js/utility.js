@@ -8,8 +8,6 @@ function populateTabs() {
         <li><a href="education.html">Educational Wing</a></li>
         <li><a href="other.html">Other</a></li>
         <li><a href="divinefootprints.html">Divine Footprints</a></li>
-        <li><a href="q&a.html">Q&A</a></li>
-        <li><a href="blogs.html">Blogs</a></li>
         <li><a href="location.html">Location</a></li>
 
     </ul>
