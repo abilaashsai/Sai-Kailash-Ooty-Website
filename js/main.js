@@ -27,6 +27,14 @@ function readData() {
                         })
                     }
                 });
+            } else {
+                year.forEach(function (month) {
+                    month.forEach(function (day) {
+                        var link = day.val().type + ".html";
+                        past = "<li><b><a href=" + link + "?date=" + day.val().date.replace(/ /g, "_") + ">" + day.val().message + '</a></b> - ' + day.val().date + "</li>";
+                        pastData.push(past);
+                    })
+                });
             }
         });
         past = "";
