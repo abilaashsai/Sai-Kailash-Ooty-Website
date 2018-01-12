@@ -99,7 +99,6 @@
     <div class="zerogrid">
         <div class="row block">
             <div class="main-content col11">
-
                 <div class="rslides_container">
                     <ul class="rslides" id="slider">
                         <li><img src="images/1.jpg"/></li>
@@ -108,6 +107,17 @@
                         <li><img src="images/4.jpg"/></li>
                     </ul>
                 </div>
+                <a id="blinker" href="https://www.youtube.com/embed/wbvKgjET6aE"
+                   style="color:red; text-decoartion: blink;"><b>*Click here to watch the LIVE proceedings of Padmashri.
+                    Hariharan's music concert at Sai Kailas from 11.00am on 19th November, 2017.</b></a>
+                <script>
+                    var blink_speed = 1000;
+                    var t = setInterval(function () {
+                        var ele = document.getElementById('blinker');
+                        ele.style.visibility = (ele.style.visibility == 'hidden' ? '' : 'hidden');
+                    }, blink_speed);
+
+                </script>
 
                 <article>
                     <div class="heading">
